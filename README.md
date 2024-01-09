@@ -15,7 +15,7 @@ Once the code is executed, a '**results.pkl**' file will be saved. It will conta
 - A time tuple (time between the start of streaming and the end of processing).
 - The "detection_mask" array.
 
-You can evaluate your results directly on Colab: https://colab.research.google.com/drive/1ekMF1UFfr3djseliJleUNpvzfyIJP57G#scrollTo=YPpbjTAkDTRj by uploading the results.pkl file (along with the test_aaico_challenge.wav file).
+You can evaluate your results directly on Colab: https://colab.research.google.com/drive/1ekMF1UFfr3djseliJleUNpvzfyIJP57G?usp=sharing by uploading the results.pkl file (along with the test_aaico_challenge.wav file).
 
 ### Instructions
 
