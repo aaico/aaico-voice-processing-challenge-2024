@@ -31,7 +31,7 @@ git push origin your-branch-name
 
 ### Solution description (to complete)
 
-**Team**
+#### Team
 
 Team name: [Team name]
 
@@ -41,7 +41,7 @@ Members:
 - [Member Name] - [Member email]
 - [Member Name] - [Member email]
 
-**Solution description**
+#### Solution description
 
 Provide clear and concise documentation in your code and update the README.md file with any additional information regarding your solution.
 
