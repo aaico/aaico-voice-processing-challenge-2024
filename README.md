@@ -16,7 +16,7 @@ Once the code is executed, a '**results.pkl**' file will be saved, which is an a
 - The label you assigned to the sample.
 - The time at which the sample was labelled.
 
-You can evaluate your results directly on Colab: https://colab.research.google.com/drive/1ekMF1UFfr3djseliJleUNpvzfyIJP57G?usp=sharing by uploading the results.pkl file (along with the test_aaico_challenge.wav file).
+You can evaluate your results directly on Colab in which the scoring method is fully explicit: https://colab.research.google.com/drive/1ekMF1UFfr3djseliJleUNpvzfyIJP57G?usp=sharing by uploading the results.pkl file (along with the test_aaico_challenge.wav file).
 
 ### Instructions
 
