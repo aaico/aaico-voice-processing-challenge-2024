@@ -8,12 +8,13 @@ Welcome to the AAICO January 2024 Voice Processing Challenge! This repository co
 
 The challenge involves completing the '**aaico_voice_processing_challenge.py**' file. This file simulates the streaming of the '**test_aaico_challenge.wav**' audio file. Frame by frame, the "emit_data" thread emits the data of the audio file. Each frame consists of 512 samples, with a sample rate of 16000 Hz for the audio file.
 
-The "process_data" thread receives these frames. Your task is to complete the code in this thread to classify each received sample by modifying the "detection_mask" array. A sample will be labeled 1 if it is detected as communication (to be broadcasted), otherwise 0.
+The "process_data" thread receives these frames. Your task is to complete the code in this thread to classify each received sample using the function "label_samples". A sample should be labeled 0 if it is detected as a command, otherwise 1.
 
-Once the code is executed, a '**results.pkl**' file will be saved. It will contain:
+Once the code is executed, a '**results.pkl**' file will be saved, which is an array containing for each sample:
 
-- A time tuple (time between the start of streaming and the end of processing).
-- The "detection_mask" array.
+- The time at which the sample was emitted.
+- The label you assigned to the sample.
+- The time at which the sample was labelled.
 
 You can evaluate your results directly on Colab: https://colab.research.google.com/drive/1ekMF1UFfr3djseliJleUNpvzfyIJP57G?usp=sharing by uploading the results.pkl file (along with the test_aaico_challenge.wav file).
 
