@@ -6,6 +6,7 @@ import queue
 import pickle
 
 ########### PARAMETERS ###########
+# DO NOT MODIFY
 # Desired sample rate 16000 Hz
 sample_rate = 16000
 # Frame length
@@ -14,6 +15,7 @@ frame_length = 512
 
 
 ########### AUDIO FILE ###########
+# DO NOT MODIFY
 # Path to the audio file
 audio_file = "test_aaico_challenge.wav"
 
@@ -30,10 +32,11 @@ audio_duration = len(audio_data_int16) / sample_rate
 
 
 ########### STREAMING SIMULATION ###########
-detection_mask = np.zeros(len(audio_data_int16), dtype=np.int16) # set to 1 if broadcast
+# DO NOT MODIFY
+detection_mask = np.zeros(len(audio_data_int16), dtype=np.int16)
 buffer = queue.Queue()
 
-def emit_data():
+def emit_data(): 
     t_f_s = time.time_ns()
     time_measurement.append(t_f_s)
     print('Start emitting')
@@ -43,13 +46,14 @@ def emit_data():
         buffer.put(frame)
     print('Stop emitting')
 
+# MODIFY
 def process_data():
     i = 0
     print('Start processing')
     while i != number_of_frames:
         frame = buffer.get()
         
-        ### YOUR CODE ###
+        ### TODO: YOUR CODE ###
         
         i += 1
     print('Stop processing')
@@ -60,8 +64,8 @@ def process_data():
         pickle.dump([time_measurement, detection_mask], file)
 
 
-
-if __name__ == "__main__":
+# DO NOT MODIFY
+if __name__ == "__main__": 
     time_measurement = []
 
     thread_process = threading.Thread(target=process_data)

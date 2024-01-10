@@ -29,6 +29,8 @@ git commit -m "Your commit message"
 git push origin your-branch-name
 ```
 
+To have your solution considered, it must be reproducible locally by the "aaico" team.
+
 ### Solution description (to complete)
 
 #### Team
