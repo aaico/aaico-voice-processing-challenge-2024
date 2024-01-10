@@ -19,6 +19,8 @@ You can evaluate your results directly on Colab: https://colab.research.google.c
 
 ### Instructions
 
+To submit your solution, clone the repository, create a branch with the name of your team, and then push your branch (see commands below). Indicate in the Solution description section (below) your team's name, the name and email of each member and a description of the solution.
+
 ```bash
 git clone <repository_url>
 pip install -r requirements.txt
@@ -29,6 +31,15 @@ git push origin your-branch-name
 
 ### Solution description (to complete)
 
+**Team**
+Team name: [Team name]
+Members:
+
+- [Member Name] - [Member email]
+- [Member Name] - [Member email]
+- [Member Name] - [Member email]
+
+**Solution description**
 Provide clear and concise documentation in your code and update the README.md file with any additional information regarding your solution.
 
 ### Submission Deadline
