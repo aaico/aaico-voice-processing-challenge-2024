@@ -35,11 +35,12 @@ audio_duration = len(audio_data_int16) / sample_rate
 # DO NOT MODIFY
 detection_mask = np.zeros(len(audio_data_int16), dtype=np.int16)
 buffer = queue.Queue()
+start_event = threading.Event()
 
 def emit_data(): 
-    t_f_s = time.time_ns()
-    time_measurement.append(t_f_s)
+    time.sleep(.5)
     print('Start emitting')
+    start_event.set()
     for i in range(0, number_of_frames):
         time.sleep(frame_length / sample_rate) # Simulate real time
         frame = audio_data_int16[i*frame_length: (i+1)*frame_length]
@@ -49,6 +50,9 @@ def emit_data():
 # MODIFY
 def process_data():
     i = 0
+    start_event.wait()
+    t_f_s = time.time_ns()
+    time_measurement.append(t_f_s)
     print('Start processing')
     while i != number_of_frames:
         frame = buffer.get()
@@ -70,6 +74,6 @@ if __name__ == "__main__":
 
     thread_process = threading.Thread(target=process_data)
     thread_emit = threading.Thread(target=emit_data)
-
+    
     thread_process.start()
     thread_emit.start()
