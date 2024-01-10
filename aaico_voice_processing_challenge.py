@@ -65,12 +65,13 @@ def process_data():
     while i != number_of_frames:
         frame = buffer.get()
         
-        ### TODO: YOUR CODE ###
+        ### TODO: YOUR CODE
         # MODIFY
         list_samples_id = np.arange(i*frame_length, (i+1)*frame_length)
         labels = [1 for _ in range(len(list_samples_id))]
-        label_samples(list_samples_id, labels)
+        ###
         
+        label_samples(list_samples_id, labels)
         i += 1
     print('Stop processing')
     # Save the list to a file
