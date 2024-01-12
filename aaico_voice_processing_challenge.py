@@ -54,8 +54,8 @@ def emit_data():
         list_samples_id = np.arange(i*frame_length, (i+1)*frame_length)
         time.sleep(frame_length / sample_rate) # Simulate real time
         frame = audio_data_int16[list_samples_id]
-        buffer.put(frame)
         notice_send_samples(list_samples_id)
+        buffer.put(frame)
     print('Stop emitting')
 
 def process_data():
@@ -70,7 +70,7 @@ def process_data():
         list_samples_id = np.arange(i*frame_length, (i+1)*frame_length)
         labels = [1 for _ in range(len(list_samples_id))]
         ###
-        
+
         label_samples(list_samples_id, labels)
         i += 1
     print('Stop processing')
