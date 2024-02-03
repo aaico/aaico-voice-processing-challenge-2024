@@ -1,9 +1,5 @@
 # AAICO February 2024 Voice Processing Challenge
 
-## Welcome
-
-Welcome to the AAICO January 2024 Voice Processing Challenge! This repository contains the necessary resources and information to participate in the challenge. Please read the following guidelines to ensure a smooth and successful participation.
-
 ### Challenge Overview
 
 The challenge involves completing the '**aaico_voice_processing_challenge.py**' file. This file simulates the streaming of the '**audio_aaico_challenge.wav**' audio file. Frame by frame, the "emit_data" thread emits the data of the audio file. Each frame consists of 512 samples, with a sample rate of 16000 Hz for the audio file.
@@ -30,26 +26,13 @@ To have your solution considered, it must be reproducible by the AAICO team.
 
 #### Team
 
-Team name: [Team name]
+Team name: AIx
 
-Members:
+Member:
 
-- [Member Name] - [Member email]
-- [Member Name] - [Member email]
-- [Member Name] - [Member email]
+- Ibrahim Patel - ibrahimpatel009@gmail.com
 
 #### Solution description
 
 Provide clear and concise documentation in your code and update the README.md file with any additional information regarding your solution.
 
-### Submission Deadline
-
-Make sure to submit your solution before February 11th 2024, 11:59pm UAE time.
-
-### Contact
-
-If you have any questions or need clarification on the challenge, feel free to reach out on Discord: https://discord.com/channels/1104007013329014884.
-
-Best of luck!
-
-AAICO team.
