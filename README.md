@@ -30,13 +30,13 @@ To have your solution considered, it must be reproducible by the AAICO team.
 
 #### Team
 
-Team name: [Team name]
+Team name: V-Stream Analysts
 
 Members:
 
-- [Member Name] - [Member email]
-- [Member Name] - [Member email]
-- [Member Name] - [Member email]
+- Mohammed Sadiq Bagalkot - sadiqshabbir4@gmail.com
+- Alora Tabuco - alorartabuco@gmail.com
+- Bhavika Kaliya - bhavikakaliya@gmail.com
 
 #### Solution description
 
