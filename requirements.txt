@@ -1,2 +1,6 @@
 librosa
 numpy
+torch
+torchvision
+torchaudio
+resampy
