@@ -17,7 +17,7 @@ frame_length = 512
 ########### AUDIO FILE ###########
 # DO NOT MODIFY
 # Path to the audio file
-audio_file = "test_aaico_challenge.wav"
+audio_file = "audio_aaico_challenge.wav"
 
 # Read the audio file and resample it to the desired sample rate
 audio_data, current_sample_rate = librosa.load(
