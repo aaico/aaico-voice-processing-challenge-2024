@@ -66,7 +66,7 @@ def process_data():
         frame = buffer.get()
         
         ### TODO: YOUR CODE
-        # MODIFY
+        # MODIFY 
         list_samples_id = np.arange(i*frame_length, (i+1)*frame_length)
         labels = [1 for _ in range(len(list_samples_id))]
         ###
