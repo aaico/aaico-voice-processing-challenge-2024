@@ -30,13 +30,13 @@ To have your solution considered, it must be reproducible by the AAICO team.
 
 #### Team
 
-Team name: [Team name]
+Team name: Alt+F4
 
 Members:
 
-- [Member Name] - [Member email]
-- [Member Name] - [Member email]
-- [Member Name] - [Member email]
+- Basim Jaaskelainen - basimjaaskelainen2000@gmail.com
+- Mariah Khalifa - mariahkhalifa05@gmail.com
+- Muhammad Ansari - [Member email]
 
 #### Solution description
 
