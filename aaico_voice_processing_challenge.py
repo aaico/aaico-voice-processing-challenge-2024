@@ -3,7 +3,7 @@ import numpy as np #math library
 import time #time library
 import threading #threading library
 import queue #queue library
-import pickle
+import pickle #pickle library - it basically serializes the object first before writing it to file
 
 ########### PARAMETERS ###########
 # DO NOT MODIFY
@@ -17,7 +17,7 @@ frame_length = 512
 ########### AUDIO FILE ###########
 # DO NOT MODIFY
 # Path to the audio file
-audio_file = "audio_aaico_challenge.wav"
+audio_file = "test_aaico_challenge.wav"
 
 # Read the audio file and resample it to the desired sample rate
 audio_data, current_sample_rate = librosa.load(
@@ -46,15 +46,14 @@ def notice_send_samples(list_samples_id):
     send_time = time.time_ns()
     results[0][list_samples_id] = send_time
 
-def emit_data(): 
-    time.sleep(.5)
+def emit_data():
     print('Start emitting')
+    start_time = time.time()
     start_event.set()
     for i in range(0, number_of_frames):
-        list_samples_id = np.arange(i*frame_length, (i+1)*frame_length)
-        time.sleep(frame_length / sample_rate) # Simulate real time
+        list_samples_id = np.arange(i * frame_length, (i + 1) * frame_length)
         frame = audio_data_int16[list_samples_id]
-        buffer.put(frame)
+        buffer.put((time.time() - start_time, frame, list_samples_id))  # Fix here
         notice_send_samples(list_samples_id)
     print('Stop emitting')
 
@@ -106,21 +105,23 @@ def process_data():
     i = 0
     start_event.wait()
     print('Start processing')
-    
+
     while i != number_of_frames:
-        frame = buffer.get()
+        start_processing_time = time.time()
+        emission_time, frame, list_samples_id = buffer.get()
 
         # MODIFY: Implement command detection logic
-        list_samples_id = np.arange(i * frame_length, (i + 1) * frame_length)
-
         # Use the provided detect_command function to determine if the frame contains a command
         is_command_frame = detect_command(frame)
 
         # Update labels based on detection results
         labels = [0 if is_command_frame else 1 for _ in range(len(list_samples_id))]
-
         label_samples(list_samples_id, labels)
         i += 1
+
+        # Print processing time for each frame
+        processing_time = (time.time() - start_processing_time) * 1000  # Convert to milliseconds
+        print(f"Processing Time for Frame {i}: {processing_time:.2f} ms")
 
     print('Stop processing')
     
