@@ -1,21 +1,14 @@
+import os
+from joblib import load
 import librosa
 import numpy as np
 import time
 import threading
 import queue
 import pickle
-import pvporcupine
-
-porcupine = pvporcupine.create(
-  access_key='zhpWuhGi8aOj2ssRk/jqEG1Vj96CjTaXRynJmYlgTQdC9lkPDjINbQ==',
-#   keywords=['GALACTIC-BATTERY', 'LACTIC-OXYGEN', 'LACTIC-TEMPERATURE'],
-  keyword_paths=['GALACTIC-BATTERY_en_mac_v3_0_0.ppn', 'LACTIC-OXYGEN_en_mac_v3_0_0.ppn', 'LACTIC-TEMPERATURE_en_mac_v3_0_0.ppn'],
-)
-
-# print(porcupine.sample_rate)
-# print(porcupine.frame_length)
-
-
+from scipy.io import wavfile
+# Load the model from the file
+loaded_clf = load('random_forest_classifier.joblib')
 
 ########### PARAMETERS ###########
 # DO NOT MODIFY
@@ -78,9 +71,9 @@ def process_data():
 
     while i != number_of_frames:
         frame = buffer.get()
-        keyword_index = porcupine.process(frame)
+        keyword_index = classify(frame)
 
-        if keyword_index >= 0:
+        if keyword_index == 0:
             print(f"Detected keyword at frame {i}")
             print(f"Detected keyword at time {i*frame_length/sample_rate}")
             print("Length of frame: ", len(frame))
@@ -105,6 +98,20 @@ def process_data():
     # Save the list to a file
     with open('results.pkl', 'wb') as file:
         pickle.dump(results, file)
+
+
+def classify(frame):
+    # Ensure the frame is in floating-point format
+    if frame.dtype != np.float32:
+        frame = frame.astype(np.float32) / np.iinfo(frame.dtype).max
+
+    # Extract features from the audio signal
+    features = librosa.feature.mfcc(y=frame, sr=sample_rate, n_mfcc=13)
+    features = np.mean(features.T, axis=0).reshape(1, -1)
+
+    # Predict the class of the input frame
+    keyword_index = loaded_clf.predict(features)
+    return keyword_index[0]
 
 
 if __name__ == "__main__": 
