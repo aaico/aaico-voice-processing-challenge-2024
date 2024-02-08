@@ -1,2 +1,5 @@
 librosa
 numpy
+torch
+torchaudio
+transformers
