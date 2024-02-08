@@ -6,7 +6,7 @@ import time
 import threading
 import queue
 import pickle
-
+from scipy.io import wavfile
 # Load the model from the file
 loaded_clf = load('random_forest_classifier.joblib')
 
@@ -73,7 +73,7 @@ def process_data():
         frame = buffer.get()
         keyword_index = classify(frame)
 
-        if keyword_index >= 0:
+        if keyword_index == 0:
             print(f"Detected keyword at frame {i}")
             print(f"Detected keyword at time {i*frame_length/sample_rate}")
             print("Length of frame: ", len(frame))
