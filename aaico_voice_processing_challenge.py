@@ -75,41 +75,38 @@ def process_data():
         
         ### TODO: YOUR CODE
         # MODIFY
-        list_samples_id = np.arange(i*frame_length, (i+1)*frame_length)
-        labels = [1 for _ in range(len(list_samples_id))]
-        ###
-
         buffered_frames.append(frame)
 
-        # Check if we have 35 frames in the buffer
-        if len(buffered_frames) == 35 or (frame_count == number_of_frames - 1):
-
+        # Process the buffered frames when the buffer is full or it's the last batch
+        if len(buffered_frames) == 35:
+            # Process and transcribe the accumulated frames
             accumulated_frames = np.concatenate(buffered_frames)
-            
-            # Normalize and reshape the audio data for the model
             waveform = accumulated_frames.astype(np.float32) / 32767
             waveform = np.expand_dims(waveform, axis=0)
-
-            # Tokenize and prepare the input tensor
             input_values = tokenizer(waveform, return_tensors="pt", padding="longest").input_values
 
-            # Forward pass through the model
             with torch.no_grad():
                 logits = model(input_values).logits
-
-            # Take argmax and decode
             predicted_ids = torch.argmax(logits, dim=-1)
-            transcription = tokenizer.batch_decode(predicted_ids)
+            transcription = tokenizer.batch_decode(predicted_ids)[0]
+            # print(transcription)
 
-            # Output the transcription
-            print(transcription[0])
+            # Check transcription for the command
+            label = 0 if "GALACTIC" in transcription else 1
 
-            # Clear the buffer
+            # Label each frame in the current batch
+            for frame_i in range(len(buffered_frames)):
+                list_samples_id = np.arange((i - len(buffered_frames) + frame_i + 1) * frame_length, 
+                                            (i - len(buffered_frames) + frame_i + 2) * frame_length)
+                label_samples(list_samples_id, [label] * frame_length)
+
+            # Clear the buffer for the next batch
             buffered_frames = []
+        if number_of_frames - i < 35:
+            list_samples_id = np.arange(i*frame_length, (i+1)*frame_length)
+            labels = [1 for _ in range(len(list_samples_id))]
+            label_samples(list_samples_id, labels)
 
-        frame_count += 1
-
-        label_samples(list_samples_id, labels)
         i += 1
     print('Stop processing')
     # Save the list to a file
