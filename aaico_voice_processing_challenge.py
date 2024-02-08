@@ -97,10 +97,11 @@ def process_data():
 
             if keyword_index == 2:
                 print("Detected keyword: GALACTIC-TEMPERATURE")
-                start_time = max(0, end_time - 22000)
+                # start_time = max(0, end_time - 22000)
+                start_time = max(0, end_time - 20000)
             elif keyword_index == 0:
                 print("Detected keyword: GALACTIC-BATTERY")
-                start_time = max(0, end_time - 28060)
+                start_time = max(0, end_time - 22060)
             else:
                 print("Detected keyword: GALACTIC-OXYGEN")
                 start_time = max(0, end_time - 18240)
