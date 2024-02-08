@@ -1,2 +1,4 @@
 librosa
 numpy
+fastdtw
+openwakeword
