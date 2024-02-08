@@ -79,7 +79,7 @@ def process_data():
         buffered_frames.append(frame)
 
         # Process the buffered frames when the buffer is full or it's the last batch
-        if len(buffered_frames) == 35:
+        if len(buffered_frames) == 50:
             # Process and transcribe the accumulated frames
             accumulated_frames = np.concatenate(buffered_frames)
             waveform = accumulated_frames.astype(np.float32) / 32767
@@ -93,7 +93,11 @@ def process_data():
 
             # Check transcription for the command
             threshold = 50
-            label = 0 if fuzz.partial_ratio("GALACTIC", transcription.upper()) > threshold else 1
+            if fuzz.partial_ratio("GALACTIC", transcription.upper()) > threshold:
+                print(transcription)
+                label = 0
+            else:
+                label = 1
 
             # Label each frame in the current batch
             for frame_i in range(len(buffered_frames)):
@@ -103,7 +107,7 @@ def process_data():
 
             # Clear the buffer for the next batch
             buffered_frames = []
-        if number_of_frames - i < 35:
+        if number_of_frames - i < 50:
             list_samples_id = np.arange(i*frame_length, (i+1)*frame_length)
             labels = [1 for _ in range(len(list_samples_id))]
             label_samples(list_samples_id, labels)
