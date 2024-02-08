@@ -4,6 +4,9 @@ import time
 import threading
 import queue
 import pickle
+import torch
+from transformers import Wav2Vec2ForCTC, Wav2Vec2Tokenizer
+import torchaudio
 
 ########### PARAMETERS ###########
 # DO NOT MODIFY
@@ -29,6 +32,9 @@ number_of_frames = len(audio_data_int16) // frame_length
 audio_data_int16 = audio_data_int16[:number_of_frames * frame_length]
 audio_duration = len(audio_data_int16) / sample_rate
 
+# Load tokenizer and model
+tokenizer = Wav2Vec2Tokenizer.from_pretrained("facebook/wav2vec2-base-960h")
+model = Wav2Vec2ForCTC.from_pretrained("facebook/wav2vec2-base-960h")
 
 ########### STREAMING SIMULATION ###########
 # DO NOT MODIFY
@@ -61,6 +67,8 @@ def emit_data():
 def process_data():
     i = 0
     start_event.wait()
+    buffered_frames = []
+    frame_count = 0
     print('Start processing')
     while i != number_of_frames:
         frame = buffer.get()
@@ -70,6 +78,36 @@ def process_data():
         list_samples_id = np.arange(i*frame_length, (i+1)*frame_length)
         labels = [1 for _ in range(len(list_samples_id))]
         ###
+
+        buffered_frames.append(frame)
+
+        # Check if we have 35 frames in the buffer
+        if len(buffered_frames) == 35 or (frame_count == number_of_frames - 1):
+
+            accumulated_frames = np.concatenate(buffered_frames)
+            
+            # Normalize and reshape the audio data for the model
+            waveform = accumulated_frames.astype(np.float32) / 32767
+            waveform = np.expand_dims(waveform, axis=0)
+
+            # Tokenize and prepare the input tensor
+            input_values = tokenizer(waveform, return_tensors="pt", padding="longest").input_values
+
+            # Forward pass through the model
+            with torch.no_grad():
+                logits = model(input_values).logits
+
+            # Take argmax and decode
+            predicted_ids = torch.argmax(logits, dim=-1)
+            transcription = tokenizer.batch_decode(predicted_ids)
+
+            # Output the transcription
+            print(transcription[0])
+
+            # Clear the buffer
+            buffered_frames = []
+
+        frame_count += 1
 
         label_samples(list_samples_id, labels)
         i += 1
