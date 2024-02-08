@@ -7,6 +7,7 @@ import pickle
 import torch
 from transformers import Wav2Vec2ForCTC, Wav2Vec2Tokenizer
 import torchaudio
+from fuzzywuzzy import fuzz
 
 ########### PARAMETERS ###########
 # DO NOT MODIFY
@@ -89,10 +90,10 @@ def process_data():
                 logits = model(input_values).logits
             predicted_ids = torch.argmax(logits, dim=-1)
             transcription = tokenizer.batch_decode(predicted_ids)[0]
-            # print(transcription)
 
             # Check transcription for the command
-            label = 0 if "GALACTIC" in transcription else 1
+            threshold = 50
+            label = 0 if fuzz.partial_ratio("GALACTIC", transcription.upper()) > threshold else 1
 
             # Label each frame in the current batch
             for frame_i in range(len(buffered_frames)):

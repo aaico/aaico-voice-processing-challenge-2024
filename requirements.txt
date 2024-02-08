@@ -3,3 +3,4 @@ numpy
 torch
 torchaudio
 transformers
+fuzzy
