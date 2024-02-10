@@ -38,7 +38,7 @@ Members:
 
 - Ammar Ahmed Farooqi - ammarahmed9999@yahoo.com - College Student at Regent Middle Ease - Course: BTEC Higher National Diploma in Computing
 
-- Murtaza  - [Member email]
+- Murtaza Mustafa - murtaza.0903@gmail.com - College Student at Heriot Watt University - Course: BSc Hons Computer Science
 
 #### Solution description
 The provided solution is designed for the AAICO February 2024 Voice Processing Challenge. The challenge involves processing a given audio file containing voice commands in a streaming simulation scenario. The goal is to detect and label voice commands accurately while simulating real-time constraints.
