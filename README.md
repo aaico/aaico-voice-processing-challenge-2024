@@ -1,55 +1,68 @@
-# AAICO February 2024 Voice Processing Challenge
+# AAICO Hackathon Submission
 
-## Welcome
+Team Name: Noufal
+Member: Noufal - kvsnoufal@gmail.com
 
-Welcome to the AAICO January 2024 Voice Processing Challenge! This repository contains the necessary resources and information to participate in the challenge. Please read the following guidelines to ensure a smooth and successful participation.
+## Approach:
+![Overview](supportFiles/solution_overview.png)
+### Steps:
+1. Stack samples of 13,000.
+2. Generate Log Mel Spectrogram.
+3. Use [Google Speech Embedding model](https://www.kaggle.com/models/google/speech-embedding) to create embeddings.
+4. Use ANN model for classification.
 
-### Challenge Overview
+### Testing:
+- Running evaluation script in Colab: [Colab Link](https://colab.research.google.com/drive/1nL5BOHXoV8quGAuNwM5fub9e3FP6FSvv?usp=sharing)
+- To replicate, upload all files in the "Colab Test" folder. 
+- Use T4 GPU runtime.
+- Recommended to evaluate on Colab
 
-The challenge involves completing the '**aaico_voice_processing_challenge.py**' file. This file simulates the streaming of the '**audio_aaico_challenge.wav**' audio file. Frame by frame, the "emit_data" thread emits the data of the audio file. Each frame consists of 512 samples, with a sample rate of 16000 Hz for the audio file.
+Custom Score: 0.59
+Precision: 0.97
+Recall: 0.97
 
-The "process_data" thread receives these frames. Your task is to complete the code in this thread to label each received sample and save your label using the provided function "label_samples". A sample should be labeled 0 if it is detected as a command, otherwise 1 (we consider that everything that is not a command should be broadcast).
 
-Once the code is executed, a '**results.pkl**' file will be saved, which is an array containing for each sample:
 
-- The time at which the sample was emitted.
-- The label you assigned to the sample.
-- The time at which the sample was labelled.
+### Training:
 
-More details on the challenge are provided here: https://docs.google.com/document/d/1Nacv8gT2kfG2wGWXIdKaisStBy2xfGPJIGy27AqqEo4.
+#### Data Preparation:
+1. Generate fake dataset using [VITS](https://github.com/jaywalnut310/vits) and [WAVEGLOW](https://github.com/NVIDIA/waveglow) models for positive samples (15k).
+2. Download the [Common Voice dataset](https://huggingface.co/datasets/mozilla-foundation/common_voice_13_0) for the negative dataset (15k).
+3. Add 32 seconds of the given audio file to the training dataset.
 
-You can evaluate your results directly on Colab in which the scoring method is fully explicit: https://colab.research.google.com/drive/1ekMF1UFfr3djseliJleUNpvzfyIJP57G?usp=sharing by uploading the results.pkl file (along with the audio_aaico_challenge.wav file).
+#### Model:
+```python
+Net(
+  (flatten): Flatten(start_dim=1, end_dim=-1)
+  (layer1): Linear(in_features=96, out_features=128, bias=True)
+  (relu1): ReLU()
+  (layernorm1): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+  (blocks): ModuleList(
+    (0-31): 32 x FCNBlock(
+      (fcn_layer): Linear(in_features=128, out_features=128, bias=True)
+      (relu): ReLU()
+      (layer_norm): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+    )
+  )
+  (last_layer): Linear(in_features=128, out_features=1, bias=True)
+  (last_act): Sigmoid()
+)
+```
 
-### Instructions
+#### Loss:
+- Binary Cross Entropy
 
-To submit your solution, fork the repository, create a branch with the name of your team, push to your branch and then create a pull request to the original repository. Indicate in the Solution description section (below) your team's name, the name and email of each member and a description of your solution.
+#### Evaluation Metric:
+- Precision, Recall, Competition Score
 
-To have your solution considered, it must be reproducible by the AAICO team.
+### Speeding up Inference:
+1. Convert log mel spectrogram creation to PyTorch and export to ONNX.
+2. Convert embedding and classification model to ONNX.
+3. Warm up GPU - Latency times are high initially. To address this, run some random datapoints through the model at initialization to warm up the GPU.
 
-### Solution description (to complete)
+### Possible Further Works:
+1. Test Time Augmentation: Increased the score but also latency. Need to explore parallelized approaches to TTA.
+2. Cleaner Training Data: Create negative samples with random texts to have both negative and positive examples for the same voice.
+3. Explore CNN-RNN based models - Avoided due to concerns about potential latency increase.
 
-#### Team
-
-Team name: [Team name]
-
-Members:
-
-- [Member Name] - [Member email]
-- [Member Name] - [Member email]
-- [Member Name] - [Member email]
-
-#### Solution description
-
-Provide clear and concise documentation in your code and update the README.md file with any additional information regarding your solution.
-
-### Submission Deadline
-
-Make sure to submit your solution before February 11th 2024, 11:59pm UAE time.
-
-### Contact
-
-If you have any questions or need clarification on the challenge, feel free to reach out on Discord: https://discord.com/channels/1104007013329014884.
-
-Best of luck!
-
-AAICO team.
+Easiest Way to test is using [Colab Notebook](https://colab.research.google.com/drive/1nL5BOHXoV8quGAuNwM5fub9e3FP6FSvv?usp=sharing) 
