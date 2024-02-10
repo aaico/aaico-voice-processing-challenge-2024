@@ -13,13 +13,10 @@ Member: Noufal - kvsnoufal@gmail.com
 
 ### Running the Sciprt:
 - Running script in Colab: [Colab Link](https://colab.research.google.com/drive/1nL5BOHXoV8quGAuNwM5fub9e3FP6FSvv?usp=sharing)
-- To replicate, upload all files in the "Colab Test" folder. 
+- To replicate, upload all files in the "Colab Test" folder to a Google Colab notebook. 
 - Use T4 GPU runtime.
 - Recommended to run on Colab or any other machine with GPU
 
-Custom Score: 0.59
-Precision: 0.97
-Recall: 0.97
 
 
 
@@ -53,7 +50,11 @@ Net(
 - Binary Cross Entropy
 
 #### Evaluation Metric:
-- Precision, Recall, Competition Score
+
+Custom Score: 0.59
+Precision: 0.97
+Recall: 0.97
+
 
 ### Speeding up Inference:
 1. Convert log mel spectrogram creation to PyTorch and export to ONNX.
