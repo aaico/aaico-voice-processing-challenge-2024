@@ -26,21 +26,63 @@ To submit your solution, fork the repository, create a branch with the name of y
 
 To have your solution considered, it must be reproducible by the AAICO team.
 
-### Solution description (to complete)
+### Solution description (completed)
 
 #### Team
 
-Team name: [Team name]
+Team name: Enchantix Innovators
 
 Members:
 
-- [Member Name] - [Member email]
-- [Member Name] - [Member email]
-- [Member Name] - [Member email]
+- Anusha Asim - anushaasim21@yahoo.com - College Student at Regent Middle East - Course: BTEC Higher National Diploma in Computing
+
+- Ammar Ahmed Farooqi - ammarahmed9999@yahoo.com - College Student at Regent Middle Ease - Course: BTEC Higher National Diploma in Computing
+
+- Murtaza Mustafa - murtaza.0903@gmail.com - College Student at Heriot Watt University - Course: BSc Hons Computer Science
 
 #### Solution description
+The provided solution is designed for the AAICO February 2024 Voice Processing Challenge. The challenge involves processing a given audio file containing voice commands in a streaming simulation scenario. The goal is to detect and label voice commands accurately while simulating real-time constraints.
 
-Provide clear and concise documentation in your code and update the README.md file with any additional information regarding your solution.
+#### Key Components and Justifications:
+
+1. YAMNet Model:
+
+The solution utilizes the YAMNet (Yet Another Multilabel Network) model from TensorFlow Hub. This pre-trained model is specifically designed for audio event classification and can recognize a diverse set of audio events, making it suitable for detecting specific voice commands in the provided audio file.
+Link to YAMNet model: https://www.kaggle.com/models/google/yamnet/frameworks/tensorFlow2/variations/yamnet/versions/1?tfhub-redirect=true
+
+2. Multithreading for Real-time Simulation:
+
+Multithreading is employed to simulate real-time processing constraints. Two threads, thread_process and thread_emit, handle data processing and audio emission simultaneously. This approach ensures that the processing logic adheres to the real-time simulation requirements of the challenge.
+
+3. Data Serialization using Pickle:
+
+The solution uses the pickle module to serialize and save the results in a binary file (results.pkl). 
+
+#### Model Performance 
+
+#### EVALUATION ENVIRONMENT
+Based on the code and logic provided by AAICO in the evaluation Google Colab, the team created our own Google Colab Notebook to assess the performance of the model: https://colab.research.google.com/drive/1qi7U9Y1Mz-3Q8L3hKbccKPqISRcnZWNQ?usp=sharing. This was done due to some edits needed in the evaluation code to ensure compatibility with our solution. Our Google Colab file contains the entire solution code, as well as the code assessing model performance.
+
+#### SCORE
+Using the logic for the score provided by the challenge, the solution scored 0.0104, indicating the ratio of correctly processed samples within the specified real-time constraints. Achieving a low score is desirable, as it indicates fewer penalties for processing delay, unintentional broadcast of command samples, and loss of communication samples.
+
+#### INDEXING ISSUE and SCORE ADJUSTMENT
+During the implementation of the provided scoring code to our solution, an indexing issue occurred, resulting in an IndexError at index 818176, which was addressed by refining the score calculation logic. The updated code ensures compatibility with our solution.
+
+#### Hardware and Environment Recommendations
+To run the solution optimally, the following hardware and environment recommendations are suggested:
+
+1. Hardware:
+- A machine with sufficient computational resources, especially considering the use of TensorFlow and its underlying neural network model (YAMNet).
+Adequate RAM and GPU capabilities for faster processing.
+
+2. Optimal Machine for Testing and Scoring:
+- A machine with at least a mid-range GPU, such as NVIDIA GTX 1060 or higher, to accelerate the YAMNet model's computations.
+- Recommended RAM: 16 GB or higher.
+- A machine running Linux, preferably Ubuntu, for seamless compatibility with TensorFlow and other dependencies.
+
+#### Limitation and Future Improvement 
+In real-world scenarios, disruptions or variations in audio input may impact performance. Future iterations could explore handling of such scenarios, incorporating error recovery mechanisms. 
 
 ### Submission Deadline
 
