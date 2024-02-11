@@ -69,7 +69,7 @@ def process_data():
     i = 0
     start_event.wait()
     buffered_frames = []
-    frame_count = 0
+    frame_buffer_size = 50
     print('Start processing')
     while i != number_of_frames:
         frame = buffer.get()
@@ -79,7 +79,7 @@ def process_data():
         buffered_frames.append(frame)
 
         # Process the buffered frames when the buffer is full or it's the last batch
-        if len(buffered_frames) == 50:
+        if len(buffered_frames) == frame_buffer_size:
             # Process and transcribe the accumulated frames
             accumulated_frames = np.concatenate(buffered_frames)
             waveform = accumulated_frames.astype(np.float32) / 32767
@@ -107,7 +107,7 @@ def process_data():
 
             # Clear the buffer for the next batch
             buffered_frames = []
-        if number_of_frames - i < 50:
+        if number_of_frames - i < frame_buffer_size:
             list_samples_id = np.arange(i*frame_length, (i+1)*frame_length)
             labels = [1 for _ in range(len(list_samples_id))]
             label_samples(list_samples_id, labels)
