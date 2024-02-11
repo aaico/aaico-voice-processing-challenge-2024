@@ -6,11 +6,11 @@ Welcome to the AAICO January 2024 Voice Processing Challenge! This repository co
 
 ### Challenge Overview
 
-The challenge involves completing the '**aaico_voice_processing_challenge.py**' file. This file simulates the streaming of the '**audio_aaico_challenge.wav**' audio file. Frame by frame, the "emit_data" thread emits the data of the audio file. Each frame consists of 512 samples, with a sample rate of 16000 Hz for the audio file.
+The challenge involves completing the '*aaico_voice_processing_challenge.py' file. This file simulates the streaming of the 'audio_aaico_challenge.wav*' audio file. Frame by frame, the "emit_data" thread emits the data of the audio file. Each frame consists of 512 samples, with a sample rate of 16000 Hz for the audio file.
 
 The "process_data" thread receives these frames. Your task is to complete the code in this thread to label each received sample and save your label using the provided function "label_samples". A sample should be labeled 0 if it is detected as a command, otherwise 1 (we consider that everything that is not a command should be broadcast).
 
-Once the code is executed, a '**results.pkl**' file will be saved, which is an array containing for each sample:
+Once the code is executed, a '*results.pkl*' file will be saved, which is an array containing for each sample:
 
 - The time at which the sample was emitted.
 - The label you assigned to the sample.
@@ -30,17 +30,28 @@ To have your solution considered, it must be reproducible by the AAICO team.
 
 #### Team
 
-Team name: [Team name]
+Team name: The innovators 
 
 Members:
 
-- [Member Name] - [Member email]
-- [Member Name] - [Member email]
-- [Member Name] - [Member email]
+- [Jamila Ibrahim] - [Jamilaibrahimh@outlook.com]
+- [Shamma Yaqoob] -  [shamma315123@gmail.com]
+
 
 #### Solution description
 
-Provide clear and concise documentation in your code and update the README.md file with any additional information regarding your solution.
+Our main idea is to implement a function that will process the audio frames from the buffer in real time and check every frame for command presence which was "GALACTIC".
+To use the process_data() function, ensure that the emit_data() function is running to simulate audio data streaming. Then, execute the process_data() function to start processing the audio frames.
+ 
+
+The process_data() function consists of many functionalities:
+1- initialization: it will track the processed frames by 'i' variable and waits till new event start.
+2-  Loop: it will iterate in the buffer so all the frames will get produced, then checks for "GALACTIC" and increments the counters.
+3- playback timing: Counts the processing duration since the processing start, then will measure the overrun time
+4-saving: it will save the results in a pickle file.
+5- Reporting: it will print  completion of processing for each frame.
+Please note: we did work in different ways and implemented many times to get different results, but we ended with the above results that we made our trials as a comment. 
+
 
 ### Submission Deadline
 
