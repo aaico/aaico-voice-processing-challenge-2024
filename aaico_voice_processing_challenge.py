@@ -47,7 +47,7 @@ buffer = queue.Queue()
 start_event = threading.Event()
 
 # Loading audio model
-audio_model = whisper.load_model("small")
+audio_model = whisper.load_model("small") # use "medium" or "large.in" for higher accurancy
 audio_list = []
 energy_level = [True]
 stream_live = [False]
