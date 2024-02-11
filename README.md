@@ -26,21 +26,93 @@ To submit your solution, fork the repository, create a branch with the name of y
 
 To have your solution considered, it must be reproducible by the AAICO team.
 
-### Solution description (to complete)
+### Solution description
 
 #### Team
 
-Team name: [Team name]
+Team name: MLX
 
 Members:
 
-- [Member Name] - [Member email]
-- [Member Name] - [Member email]
-- [Member Name] - [Member email]
+- Suhail Ahmed - suhailz13ahmed@outlook.com
+- Noureldine Adib - noureldine2003@gmail.com
+- Dhruv Chaturvedi - dhruvradhakant@gmail.com
 
 #### Solution description
 
-Provide clear and concise documentation in your code and update the README.md file with any additional information regarding your solution.
+While popular audio machine learning probelms include speaker diarization, audio segmentation, voice activity detection (VAD) and so on and so forth, owing to the nature of the task, we approached it as a "Wake Word" problem. Popular wake word models around the world include Apple's "Siri" and Amazon's "Alexa" wherein the model does not start listening to your commands unless you use the model's corresponding wake words such as "Hey Siri" or "Alexa". Upon doing so, the model starts listening an parsing your commands.
+
+Similarly, the probelm statement describes three commands; all starting with the word "Galactic". Since we have a small set of possible commands in this challenge (only three - oxygen, temperature and battery), we decided to leverage pre-trained models for all three commands. For the pre-trained model, we used Picovoice's (https://picovoice.ai) robust wake word model - Porcupine (https://github.com/Picovoice/porcupine). We leveraged it to train 3 different models on the words "Galactic Temperature", "Galactic Oxygen" and "Galactic Battery". The 3 pre-trianed models were later downloaded (can be found in the root directory under the folder; models), imported and used in our code.
+
+The primary function, process_data(), processes a stream of audio frames, detects keywords using Porcupine, and labels the samples accordingly (0 or 1). We also wrote a helper function, process_label() which handles the dynamic labeling of samples based on keyword detection.
+
+An overview of our two core funcitons can be found below:
+
+#### process_label(start_time, end_time, flag, cur_frame, keyword=False) Function:
+
+Parameters:
+
+- start_time: Start time of the labeled interval.
+- end_time: End time of the labeled interval.
+- flag: Integer indicating the type of labeling (0 for keyword, 1 for no keyword).
+- cur_frame: Current frame index.
+- keyword: Boolean flag indicating if a keyword was detected in the previous frame.
+
+Returns:
+
+- Updated keyword flag.
+
+- Logic:
+
+- If flag is 0, labels samples with a detected keyword.
+- If flag is 1 and the last frame was a command (keyword is True), it adjusts the labeling by rolling back onto the last parsed frame and marking it as 1 from there until the current point.
+- If the flag is 1 and the last parsed frame was not a keyword, it marks it as 1.
+
+#### process_data() Function:
+
+Overview:
+
+- Processes a stream of audio frames.
+- Detects keywords using Porcupine.
+- Calls process_label() to dynamically label samples.
+
+Key Steps:
+
+- Waits for the start event (start_event) before starting processing.
+- Enters a loop to process each frame until the end of the stream.
+- Retrieves an audio frame from the buffer (buffer.get()).
+- Calls Porcupine to detect keywords (porcupine.process(frame)).
+- Determines the end time of the current frame.
+- Calls process_label() based on the detected keyword index.
+
+Keyword Detection and Labeling:
+
+- Adjusts start and end offset values based on the keyword detected.
+- Utilizes process_label() to label samples dynamically.
+
+Result:
+
+- Saves the labeled samples and timestamps to a pickle file (results.pkl).
+
+#### Our Results
+
+Due to the robust and dynamic way we appriached this problem wherein we aimed to minimize resources and maximize accuracy, we obtained an impresseive score of 94 (with the slow threshold penalty) as shown below.
+
+<img width="620" alt="image" src="https://github.com/Suhail270/aaico-voice-processing-challenge-2024/assets/57321434/669a1dc5-ec5a-4be5-a6dc-d899e4751fcb">
+
+
+If we were to comment out the threshold penalty, we get a score of 100 as shown below.
+
+<img width="620" alt="image" src="https://github.com/Suhail270/aaico-voice-processing-challenge-2024/assets/57321434/a6b2e510-f212-47af-a607-d43210fc6084">
+
+
+This highlights our succesful attemt at identifying the command, declaring offsets and labeling the emitted audio, framy by frame. The only reason we get hit with the penalty is due to us leveraging an external pre-trained model. With enough time and resources, we believe that we can develop our own in-house model to optimize our solution even further.
+
+#### Note: The API key listed in the file is for the sake of this hackathon only and there are no issues of privacy whatsoever. We have allowance of upto 3 different users using this API key, only 1 of us is using it in our local machine. Our code runs offline as long as the API key is mentioned, we highlighted in our request that the model we trained will be used to take part in a hackathon and there may be monetary benefits out of this. We were given approval.
+
+For any queries you may have, please do contact suhailz13ahmed@outlook.com or +971547475288.
+
+We are all students from Heriot-Watt University, Dubai.
 
 ### Submission Deadline
 
