@@ -4,6 +4,10 @@ import time
 import threading
 import queue
 import pickle
+from vosk import Model, KaldiRecognizer
+import json
+import os
+
 
 ########### PARAMETERS ###########
 # DO NOT MODIFY
@@ -12,12 +16,16 @@ sample_rate = 16000
 # Frame length
 frame_length = 512
 
-
+model_path = "vosk-model-small-en-us-0.15"
+if not os.path.exists(model_path):
+    print("Please download the model from https://alphacephei.com/vosk/models and unpack as 'model' in the current folder.")
+    exit(1)
+vosk_model = Model(model_path)
 
 ########### AUDIO FILE ###########
 # DO NOT MODIFY
 # Path to the audio file
-audio_file = "test_aaico_challenge.wav"
+audio_file = "audio_aaico_challenge.wav"
 
 # Read the audio file and resample it to the desired sample rate
 audio_data, current_sample_rate = librosa.load(
@@ -59,25 +67,36 @@ def emit_data():
     print('Stop emitting')
 
 def process_data():
+    recognizer = KaldiRecognizer(vosk_model, sample_rate)
     i = 0
     start_event.wait()
     print('Start processing')
+    
     while i != number_of_frames:
         frame = buffer.get()
+        frame_bytes = np.frombuffer(frame, np.int16).tobytes()
         
-        ### TODO: YOUR CODE
-        # MODIFY
+        if recognizer.AcceptWaveform(frame_bytes):
+            result = json.loads(recognizer.Result())
+            text = result.get('text', '').lower()
+            
+            # Check if the recognized text is a command
+            is_command = "galactic" in text 
+            
+            print(f"Frame {i}: {'Command detected' if is_command else 'Communication'} - {text}")
+        else:
+            is_command = False  # If nothing is recognized, consider it communication
+        
         list_samples_id = np.arange(i*frame_length, (i+1)*frame_length)
-        labels = [1 for _ in range(len(list_samples_id))]
-        ###
-
+        labels = [0 if is_command else 1 for _ in range(len(list_samples_id))]
+        
         label_samples(list_samples_id, labels)
+        
         i += 1
+    
     print('Stop processing')
-    # Save the list to a file
     with open('results.pkl', 'wb') as file:
         pickle.dump(results, file)
-
 
 if __name__ == "__main__": 
     time_measurement = []
