@@ -66,4 +66,4 @@ Recall: 0.97
 2. Cleaner Training Data: Create negative samples with random texts to have both negative and positive examples for the same voice.
 3. Explore CNN-RNN based models - Avoided due to concerns about potential latency increase.
 
-Easiest Way to test is using [Colab Notebook](https://colab.research.google.com/drive/1nL5BOHXoV8quGAuNwM5fub9e3FP6FSvv?usp=sharing) 
+Easiest Way to reproduce is in [Colab ](https://colab.research.google.com/drive/1nL5BOHXoV8quGAuNwM5fub9e3FP6FSvv?usp=sharing) 
