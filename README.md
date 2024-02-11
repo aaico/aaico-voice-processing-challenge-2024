@@ -27,14 +27,37 @@ To submit your solution, fork the repository, create a branch with the name of y
 To have your solution considered, it must be reproducible by the AAICO team.
 
 ### Solution description (to complete)
+Real-time Speech Recognition with Vosk and Python
 
+This code demonstrates real-time speech recognition using the Vosk speech recognition library in Python. The code uses a threading model to simulate real-time processing and emitting of audio frames.
+
+##Requirements
+
+Python 3.6 or higher
+Vosk speech recognition library
+A pre-trained Vosk model (vosk-model-small-en-us-0.15)
+
+##Setup
+
+Install the Vosk library by following the instructions on the Vosk website (https://alphacephei.com/vosk/install).
+Download a pre-trained Vosk model from the Vosk website (https://alphacephei.com/vosk/models) and extract it to a directory.
+Modify the model_path variable in the code to point to the directory containing the Vosk model.
+
+##Usage
+
+Run the code in a Python environment.
+The code will start emitting audio frames to the Vosk recognizer.
+The Vosk recognizer will process the audio frames in real-time and output the recognized speech.
+The recognized speech will be labeled as either 0 or 1 based on the recognized words.
+The labeled speech and timing information will be stored in the results array.
+The results array will be saved to a pickle file (results.pkl) at the end of processing.
 #### Team
 
-Team name: [Team name]
+Team name: [AI]
 
 Members:
 
-- [Member Name] - [Member email]
+- [Hanin Atwany] - [hanin.atwany@mbzuai.ac.ae]
 - [Member Name] - [Member email]
 - [Member Name] - [Member email]
 
