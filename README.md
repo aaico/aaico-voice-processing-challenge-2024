@@ -34,7 +34,7 @@ This code demonstrates real-time speech recognition using the Vosk speech recogn
 ##Requirements
 
 Python 3.6 or higher
-Vosk speech recognition library
+Vosk speech recognition library (!pip install vosk)
 A pre-trained Vosk model (vosk-model-small-en-us-0.15)
 
 ##Setup
