@@ -26,7 +26,9 @@ To submit your solution, fork the repository, create a branch with the name of y
 
 To have your solution considered, it must be reproducible by the AAICO team.
 
-### Solution description (to complete)
+### Solution description
+
+Vosk is a required install before executing this code.
 
 #### Team
 
@@ -40,7 +42,7 @@ Members:
 
 #### Solution description
 
-Provide clear and concise documentation in your code and update the README.md file with any additional information regarding your solution.
+Vosk's KaldiRecognizer function is used for speech recognition, processing each frame and searching for the keyword "GALACTIC". When/if found, it labels the respective samples with a 0 and captures the receive time.
 
 ### Submission Deadline
 
