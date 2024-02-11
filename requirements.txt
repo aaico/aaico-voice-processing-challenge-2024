@@ -1,7 +1,3 @@
+torch
 librosa
 numpy
-torch
-torchvision
-torchaudio
-resampy
-transformers

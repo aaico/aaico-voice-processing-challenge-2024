@@ -1,55 +1,50 @@
 # AAICO February 2024 Voice Processing Challenge
 
-## Welcome
+## Solution description
 
-Welcome to the AAICO January 2024 Voice Processing Challenge! This repository contains the necessary resources and information to participate in the challenge. Please read the following guidelines to ensure a smooth and successful participation.
+### Team
 
-### Challenge Overview
-
-The challenge involves completing the '**aaico_voice_processing_challenge.py**' file. This file simulates the streaming of the '**audio_aaico_challenge.wav**' audio file. Frame by frame, the "emit_data" thread emits the data of the audio file. Each frame consists of 512 samples, with a sample rate of 16000 Hz for the audio file.
-
-The "process_data" thread receives these frames. Your task is to complete the code in this thread to label each received sample and save your label using the provided function "label_samples". A sample should be labeled 0 if it is detected as a command, otherwise 1 (we consider that everything that is not a command should be broadcast).
-
-Once the code is executed, a '**results.pkl**' file will be saved, which is an array containing for each sample:
-
-- The time at which the sample was emitted.
-- The label you assigned to the sample.
-- The time at which the sample was labelled.
-
-More details on the challenge are provided here: https://docs.google.com/document/d/1Nacv8gT2kfG2wGWXIdKaisStBy2xfGPJIGy27AqqEo4.
-
-You can evaluate your results directly on Colab in which the scoring method is fully explicit: https://colab.research.google.com/drive/1ekMF1UFfr3djseliJleUNpvzfyIJP57G?usp=sharing by uploading the results.pkl file (along with the audio_aaico_challenge.wav file).
-
-### Instructions
-
-To submit your solution, fork the repository, create a branch with the name of your team, push to your branch and then create a pull request to the original repository. Indicate in the Solution description section (below) your team's name, the name and email of each member and a description of your solution.
-
-To have your solution considered, it must be reproducible by the AAICO team.
-
-### Solution description (to complete)
-
-#### Team
-
-Team name: [Team name]
+Team name: OwlAI
 
 Members:
 
-- [Member Name] - [Member email]
-- [Member Name] - [Member email]
-- [Member Name] - [Member email]
+- Nripesh Niketan - nripesh14@gmail.com
+- Arunima Santhosh Kumar - arunimasanthosh2303@gmail.com
 
-#### Solution description
+### Solution description
 
-Provide clear and concise documentation in your code and update the README.md file with any additional information regarding your solution.
+For the Applied AI Company (AAICO) February 2024 Hackathon, our team developed a Python-based solution to address the challenge of distinguishing between control commands and broadcast communications in a one-minute audio stream from a firefighting suit. Our approach leverages a custom AudioResNetClassifier model, optimized for speed and accuracy in real-time audio processing and wake word recognition.
 
-### Submission Deadline
+#### Solution Overview
 
-Make sure to submit your solution before February 11th 2024, 11:59pm UAE time.
+Our solution employs a deep learning model, AudioResNetClassifier, inspired by the ResNet architecture, tailored for audio signal processing. The model processes audio data frame-by-frame, with each frame converted into a Mel-spectrogram representation before being fed into the network. This approach ensures the model captures both spectral and temporal characteristics of the audio, crucial for distinguishing between voice commands and broadcast communications.
 
-### Contact
+#### Model Architecture
 
-If you have any questions or need clarification on the challenge, feel free to reach out on Discord: https://discord.com/channels/1104007013329014884.
+The AudioResNetClassifier consists of an initial convolutional layer followed by a series of ResNet blocks, each designed to extract and refine features from the audio signal. The model concludes with an adaptive average pooling layer and a fully connected layer, outputting a binary classification for each audio frame: 0 for control commands and 1 for broadcast communications.
 
-Best of luck!
+##### Key Components:
 
-AAICO team.
+- **Initial Convolutional Layer:** Prepares the input Mel-spectrogram for deeper processing, using a 5x5 kernel.
+- **ResNet Blocks:** Each block contains two convolutional layers with batch normalization and ReLU activations, including a shortcut connection to facilitate deeper learning without vanishing gradients.
+- **Adaptive Average Pooling:** Reduces the feature map to a fixed size, ensuring the model remains adaptable to inputs of varying dimensions.
+- **Fully Connected Layer:** Translates the high-level features extracted by the ResNet blocks into the final binary classification.
+
+#### Training Environment
+
+The model was trained using NVIDIA A100 GPUs on an Ubuntu machine, chosen for their computational efficiency and ability to handle large datasets rapidly. This environment enabled us to iterate quickly, experimenting with different hyperparameters and model architectures to optimize performance.
+
+#### Dataset and Preprocessing
+
+Training data comprised one-minute audio streams, sampled at 16 kHz, representing realistic scenarios captured from firefighting suits. Each audio stream was segmented into frames of 512 samples, converted into Mel-spectrograms, and then normalized before being inputted into the model. This preprocessing step was crucial for enhancing model sensitivity to key features indicative of voice commands versus broadcast communications.
+
+#### Performance
+
+Our solution achieved a score of 0.72, reflecting a balance between speed and accuracy. The model's performance was assessed based on its ability to accurately classify each audio frame with minimal processing delay, measured as the difference between the audio file's duration and the time taken for the model to process and classify the audio stream.
+
+#### Conclusion and Future Work
+
+This solution demonstrates the potential of deep learning in real-time audio processing applications, particularly in high-stakes environments such as firefighting. Looking ahead, we aim to further refine our model by exploring more complex architectures like AutoRegressive and training it on a broader dataset to enhance its robustness and accuracy.
+
+By leveraging state-of-the-art hardware and a novel approach to audio stream analysis, we believe our solution represents a significant step forward in the development of intelligent voice-controlled systems, with potential applications extending beyond the scope of this hackathon.
+
