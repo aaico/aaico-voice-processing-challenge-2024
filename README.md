@@ -52,7 +52,7 @@ The process_data() function consists of many functionalities:
 5- Reporting: it will print  completion of processing for each frame.
 
 
-Please note: We made several attempts working in different ways and implemented many times to get different results. However, we ended up choosing the code giving us the best results and commented out our other trials for reference.
+Please note: We made several attempts working in different ways and implemented many times to get different results. However, we ended up choosing the code that gave us the best results and commented out our other trials for reference.
 
 
 ### Submission Deadline
