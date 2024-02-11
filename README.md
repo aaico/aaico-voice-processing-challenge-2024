@@ -59,7 +59,7 @@ Recall: 0.97
 ### Speeding up Inference:
 1. Convert log mel spectrogram creation to PyTorch and export to ONNX.
 2. Convert embedding and classification model to ONNX.
-3. Warm up GPU - Latency times are high initially. To address this, run some random datapoints through the model at initialization to warm up the GPU.
+3. Warm up GPU - Latency times are high initially. This is because it's sleeping (less power allocation during idling). To address this, run some random datapoints through the model at initialization to warm up the GPU.
 
 ### Possible Further Works:
 1. Test Time Augmentation: Increased the score but also latency. Need to explore parallelized approaches to TTA.
