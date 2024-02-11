@@ -138,7 +138,7 @@ This highlights our succesful attemt at identifying the command, declaring offse
 We tried several approaches and picked the best one in terms of score (which is implemented in our current code base). Some of our discarded approaches included:
 
 - Native CNN based on audio images - We curated a dataset of audio segments comprising the commands which we converted to images (represented as a matrix). We then compared each image segment of audio to that of our training dataset's and predict accordingly. This gave us an accuracy of 95%.
-- 
+
 - Native Random Forest Classifier - With the same dataset along with augemntations of it (original audio samples + noisy augmentations of them), we acheived an accuracy of 93%.
 
 However, both performed poorly on the scoring, yielding scores of only 45 and 19 respectively.
