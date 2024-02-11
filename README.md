@@ -30,13 +30,13 @@ To have your solution considered, it must be reproducible by the AAICO team.
 
 #### Team
 
-Team name: [Team name]
+Team name: Crpyt
 
 Members:
 
-- [Member Name] - [Member email]
-- [Member Name] - [Member email]
-- [Member Name] - [Member email]
+- Raj Dinesh Jagasia - rajdj26103@gmail.com - Undergraduate Computer Science Student
+- Kevin Joseph Dinesh - kj2011@hw.ac.uk - Undergraduate Computer Science Student
+- Abhinav Kottayil - akk2002@hw.ac.uk - Undergraduate Computer Science Student
 
 #### Solution description
 

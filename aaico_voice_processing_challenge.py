@@ -19,49 +19,41 @@ sample_rate = 16000
 # Frame length
 frame_length = 512
 
-class SimpleAudioCNN(nn.Module):
+class CustomCNN(nn.Module):
     def __init__(self):
-        super(SimpleAudioCNN, self).__init__()
-        
-        # Initial convolution layer with batch normalization and ReLU activation
-        self.conv1 = nn.Conv2d(1, 16, kernel_size=3, stride=1, padding=1)
+        super(CustomCNN, self).__init__()
+        # Define the initial convolution layer
+        self.conv1 = nn.Conv2d(1, 16, kernel_size=3, stride=2, padding=1)
         self.bn1 = nn.BatchNorm2d(16)
-        self.relu1 = nn.ReLU(inplace=True)
+        self.relu = nn.ReLU(inplace=True)
         
-        # Second convolution layer - Consider removing pooling to preserve spatial dimensions
-        self.conv2 = nn.Conv2d(16, 32, kernel_size=3, stride=1, padding=1)
+        # Define additional convolution layers with increased channels but efficient processing
+        self.conv2 = nn.Conv2d(16, 32, kernel_size=3, stride=2, padding=1)
         self.bn2 = nn.BatchNorm2d(32)
-        self.relu2 = nn.ReLU(inplace=True)
         
-        # Third convolution layer - Continue without immediate pooling
-        self.conv3 = nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1)
-        self.bn3 = nn.BatchNorm2d(64)
-        self.relu3 = nn.ReLU(inplace=True)
+        # Incorporate a depthwise separable convolution as an experiment for efficiency
+        self.depthwise = nn.Conv2d(32, 32, kernel_size=3, padding=1, groups=32)
+        self.pointwise = nn.Conv2d(32, 64, kernel_size=1)
         
-        # Use a single pooling layer to reduce dimensions before the fully connected layer
-        self.pool = nn.MaxPool2d(kernel_size=2, stride=2)  # Adjusted kernel size and stride
+        self.bn3_depthwise = nn.BatchNorm2d(32)
+        self.bn3_pointwise = nn.BatchNorm2d(64)
         
-        # Adaptive average pooling to ensure fixed-size output
-        self.ap = nn.AdaptiveAvgPool2d(output_size=(1, 1))
-        
-        # Fully connected layer for binary classification output
-        self.fc = nn.Linear(64, 1)  # Assuming the flattened size is compatible
-        
+        # Global Average Pooling
+        self.global_avg_pool = nn.AdaptiveAvgPool2d((1,1))
+        self.fc = nn.Linear(64, 1)  # Adjust based on the actual task (binary classification here)
+    
     def forward(self, x):
-        x = self.relu1(self.bn1(self.conv1(x)))
-        x = self.relu2(self.bn2(self.conv2(x)))
-        x = self.relu3(self.bn3(self.conv3(x)))
-        
-        # Apply pooling here to manage dimensionality reduction carefully
-        x = self.pool(x)
-        
-        x = self.ap(x)
-        x = torch.flatten(x, 1)
+        x = self.relu(self.bn1(self.conv1(x)))
+        x = self.relu(self.bn2(self.conv2(x)))
+        x = self.relu(self.bn3_depthwise(self.depthwise(x)))
+        x = self.relu(self.bn3_pointwise(self.pointwise(x)))
+        x = self.global_avg_pool(x)
+        x = x.view(x.size(0), -1)  # Flatten
         x = torch.sigmoid(self.fc(x))
         return x
 
 # Model instantiation and moving to the appropriate device
-model = SimpleAudioCNN().to(device)
+model = CustomCNN().to(device)
 
 class AudioDataset(Dataset):
     def __init__(self, frames, transform=None):
