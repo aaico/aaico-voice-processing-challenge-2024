@@ -26,21 +26,32 @@ To submit your solution, fork the repository, create a branch with the name of y
 
 To have your solution considered, it must be reproducible by the AAICO team.
 
-### Solution description (to complete)
+### Solution description
 
 #### Team
 
-Team name: [Team name]
+Team name: Data Crusaders
 
 Members:
 
-- [Member Name] - [Member email]
-- [Member Name] - [Member email]
-- [Member Name] - [Member email]
+- Saajida Shajahan - mailsaajida@gmail.com
+- Seena MS - contactmeseena508@gmail.com
+- Rubaya Mohammed Ali - rubayah.m@gmail.com
+
+#### Requirements
+
+Vosk Installation: Ensure the Vosk library is installed in your Python environment. Vosk can be installed via pip using the following command: pip install vosk
+
+Download a Pre-trained Vosk Model: Select and download an appropriate Vosk pre-trained model for your language and domain from the official Vosk Model page. The model named vosk-model-small-en-us-0.15 is a compact model for English, suitable for quick tests and devices with limited resources. For more accurate recognition, consider larger models that are also available on the Vosk model page.
 
 #### Solution description
 
-Provide clear and concise documentation in your code and update the README.md file with any additional information regarding your solution.
+The solution here mainly includes two components:
+
+Speech Recognition: The Vosk speech recognition library is utilized to transcribe the audio content of each frame. Vosk is chosen for its offline capabilities and support for real-time processing, making it suitable for applications where internet access is unavailable or latency needs to be minimized.
+
+Command Detection and Labeling: For each frame processed, the transcribed text is checked for the presence of the keyword "galactic," which signifies a command. Frames containing this keyword are labeled as '0', indicating they should not be broadcasted. All other frames are labeled as '1', indicating they are clear for broadcast.
+
 
 ### Submission Deadline
 
