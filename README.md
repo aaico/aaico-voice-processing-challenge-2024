@@ -117,7 +117,7 @@ This code was developed on Python 3.11.6
 | Constraint  | Score | 
 | -------------- | --------------- | 
 | Original Evaluation (With threshold penalty)      | 94.34               |
-| Without slow threshold penalty    | x100              |
+| Without slow threshold penalty    | 100              |
 
 Due to the robust and dynamic way we appriached this problem wherein we aimed to minimize resources and maximize accuracy, we obtained an impresseive score of 94 (with the slow threshold penalty) as shown below.
 
