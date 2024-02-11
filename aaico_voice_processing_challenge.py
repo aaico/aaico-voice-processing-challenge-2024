@@ -117,10 +117,8 @@ def predict(model, test):
                 inputs = (inputs - inputs_m) / inputs_s
                 outputs = model(inputs)
 
-                probs = torch.sigmoid(outputs) 
-                prediction = int(
-                    probs.round().item()
-                )
+                probs = torch.sigmoid(outputs)
+                prediction = int(probs.round().item())
 
     return prediction
 
