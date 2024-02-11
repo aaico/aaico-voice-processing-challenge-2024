@@ -81,7 +81,7 @@ In addition to our primary Mel-Spectrogram solution, we present an alternative a
 **Implementation**
 
 
-Our alternative solution is encapsulated within the `aaico_voice_processing_challenge.py` file in the Speech-to-text folder. In the real-time scenario, frames are processed in batches of 50. Every batch of 50 frames undergoes transcription. If the transcription contains the word "GALACTIC", "OXYGEN", "TEMPERATURE" OR "BATTERY", the frames in the batch are retroactively labeled as Class 0; otherwise, they are labeled as Class 1.
+Our alternative solution is encapsulated within the `aaico_voice_processing_challenge.py` file in the Speech-to-text folder. In the real-time scenario, frames are processed in batches of 35. Every batch of 35 frames undergoes transcription. If the transcription contains the word "GALACTIC", "OXYGEN", "TEMPERATURE" OR "BATTERY", the frames in the batch are retroactively labeled as Class 0; otherwise, they are labeled as Class 1.
 
 **Performance**
 
