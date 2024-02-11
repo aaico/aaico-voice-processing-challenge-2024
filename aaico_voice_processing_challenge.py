@@ -5,6 +5,13 @@ import threading
 import queue
 import pickle
 
+
+from fastdtw import fastdtw
+template1 = np.load('template1.npy')
+template2 = np.load('template2.npy')
+template3 = np.load('template3.npy')
+
+
 ########### PARAMETERS ###########
 # DO NOT MODIFY
 # Desired sample rate 16000 Hz
@@ -17,7 +24,7 @@ frame_length = 512
 ########### AUDIO FILE ###########
 # DO NOT MODIFY
 # Path to the audio file
-audio_file = "test_aaico_challenge.wav"
+audio_file = "audio_aaico_challenge.wav"
 
 # Read the audio file and resample it to the desired sample rate
 audio_data, current_sample_rate = librosa.load(
@@ -58,21 +65,49 @@ def emit_data():
         notice_send_samples(list_samples_id)
     print('Stop emitting')
 
+def is_galactic(frame, template, threshold):
+    distance,_ = fastdtw(frame, template)
+    if distance < threshold:
+        return 1
+    else:
+        return 0
+
 def process_data():
     i = 0
     start_event.wait()
     print('Start processing')
+    working_set = []
+    till_next = 0
+    list_samples_id = np.arange(i*frame_length, (i+1)*frame_length)
+    labels = [0 for _ in range(len(list_samples_id))]
     while i != number_of_frames:
         frame = buffer.get()
         
         ### TODO: YOUR CODE
         # MODIFY
-        list_samples_id = np.arange(i*frame_length, (i+1)*frame_length)
-        labels = [1 for _ in range(len(list_samples_id))]
-        ###
+        if i>26:
+            del working_set[:2]
+            ans1 = is_galactic(working_set,template1,100000) 
+            ans2 = is_galactic(working_set,template2,100000) 
+            ans3 = is_galactic(working_set,template3,100000) 
 
+            ans = ans1 | ans2 | ans3
+            
+            if ans>0:
+                # print(i-25)
+                till_next = 35
+            if till_next >0:
+                list_samples_id = np.arange(i*frame_length, (i+1)*frame_length)
+                labels = [1 for _ in range(len(list_samples_id))]
+            else:
+                list_samples_id = np.arange(i*frame_length, (i+1)*frame_length)
+                labels = [0 for _ in range(len(list_samples_id))]
+            till_next-=1
         label_samples(list_samples_id, labels)
+        for j in range(0,512,256):
+            working_set.append(max(frame[j:]))
         i += 1
+    
     print('Stop processing')
     # Save the list to a file
     with open('results.pkl', 'wb') as file:
