@@ -69,7 +69,7 @@ def process_data():
     i = 0
     start_event.wait()
     buffered_frames = []
-    frame_buffer_size = 50
+    frame_buffer_size = 35
     print('Start processing')
     while i != number_of_frames:
         frame = buffer.get()
@@ -89,12 +89,24 @@ def process_data():
             with torch.no_grad():
                 logits = model(input_values).logits
             predicted_ids = torch.argmax(logits, dim=-1)
-            transcription = tokenizer.batch_decode(predicted_ids)[0]
+            transcription = tokenizer.batch_decode(predicted_ids)[0].upper()
 
             # Check transcription for the command
-            threshold = 50
-            if fuzz.partial_ratio("GALACTIC", transcription.upper()) > threshold:
-                print(transcription)
+            threshold_gal = 75
+            threshold_ox = 75
+            threshold_temp = 75
+            threshold_bat = 75
+            if fuzz.partial_ratio("GALACTIC", transcription) >= threshold_gal:
+                print("gal :", transcription)
+                label = 0
+            elif fuzz.partial_ratio("OXYGEN", transcription) >= threshold_ox:
+                print("ox :", transcription)
+                label = 0
+            elif fuzz.partial_ratio("TEMPERATURE", transcription) >= threshold_temp:
+                print("temp :", transcription)
+                label = 0
+            elif fuzz.partial_ratio("BATTERY", transcription) >= threshold_bat:
+                print("bat :", transcription)
                 label = 0
             else:
                 label = 1
