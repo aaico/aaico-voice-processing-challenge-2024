@@ -30,17 +30,17 @@ To have your solution considered, it must be reproducible by the AAICO team.
 
 #### Team
 
-Team name: [Team name]
+Team name: Ctrl X
 
 Members:
 
-- [Member Name] - [Member email]
-- [Member Name] - [Member email]
-- [Member Name] - [Member email]
+- Mohammed Riaz - mohd.riaz.2002@gmail.com
+- Mohammed Ejazzur Rahman - mohammedejazzur@gmail.com
+- Hadiyya Mattummathodi - hadiyyasakkir@gmail.com
 
 #### Solution description
 
-Provide clear and concise documentation in your code and update the README.md file with any additional information regarding your solution.
+Please install vosk using "pip install vosk" before running the solution.
 
 ### Submission Deadline
 
