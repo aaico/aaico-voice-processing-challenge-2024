@@ -63,17 +63,17 @@ def emit_data():
         notice_send_samples(list_samples_id)
     print('Stop emitting')
 
+# LOADING THE MODEL 
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
+audioModel = AudioClassifier()
+audioModel.load_state_dict(torch.load('model/model.pkl'))
+audioModel.eval()
+
 def process_data():
     i = 0
     start_event.wait()
     print('Start processing')
-
-    # LOADING THE MODEL 
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-
-    audioModel = AudioClassifier()
-    audioModel.load_state_dict(torch.load('model/model.pkl'))
-    audioModel.eval()
 
     while i != number_of_frames:
         frame = buffer.get()
