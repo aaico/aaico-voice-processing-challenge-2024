@@ -1,2 +1,17 @@
 librosa
 numpy
+time
+threading
+queue
+pickle
+matplotlib.pyplot
+Wav2Vec2ForSequenceClassification, Wav2Vec2Tokenizer
+IPython.display
+plotly.express
+torch
+Sequential
+Dense, Flatten, BatchNormalization, Dropout
+Adam
+EarlyStopping, ModelCheckpoint
+train_test_split
+tensorflow
