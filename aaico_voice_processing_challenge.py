@@ -4,6 +4,11 @@ import time
 import threading
 import queue
 import pickle
+import whisper
+import subprocess
+import json
+from vosk import Model, KaldiRecognizer
+import time
 
 ########### PARAMETERS ###########
 # DO NOT MODIFY
@@ -12,16 +17,17 @@ sample_rate = 16000
 # Frame length
 frame_length = 512
 
-
+# Global variable to control processing termination
+terminate_processing = False
 
 ########### AUDIO FILE ###########
 # DO NOT MODIFY
 # Path to the audio file
-audio_file = "test_aaico_challenge.wav"
+audio_file = "audio_aaico_challenge.wav"
 
 # Read the audio file and resample it to the desired sample rate
 audio_data, current_sample_rate = librosa.load(
-    audio_file, 
+    audio_file,
     sr=sample_rate,
 )
 audio_data_int16 = (audio_data * 32767).astype(np.int16)
@@ -29,13 +35,13 @@ number_of_frames = len(audio_data_int16) // frame_length
 audio_data_int16 = audio_data_int16[:number_of_frames * frame_length]
 audio_duration = len(audio_data_int16) / sample_rate
 
-
 ########### STREAMING SIMULATION ###########
 # DO NOT MODIFY
 results = np.zeros(shape=(3, len(audio_data_int16)), dtype=np.int64)
-# Detection mask lines are SENT TIME, LABEL, RECEIVE TIME. 
+# Detection mask lines are SENT TIME, LABEL, RECEIVE TIME.
 buffer = queue.Queue()
 start_event = threading.Event()
+streaming_done = False  # Flag to signal streaming completion
 
 def label_samples(list_samples_id, labels):
     receive_time = time.time_ns()
@@ -46,44 +52,66 @@ def notice_send_samples(list_samples_id):
     send_time = time.time_ns()
     results[0][list_samples_id] = send_time
 
-def emit_data(): 
+def emit_data():
     time.sleep(.5)
     print('Start emitting')
     start_event.set()
     for i in range(0, number_of_frames):
-        list_samples_id = np.arange(i*frame_length, (i+1)*frame_length)
-        time.sleep(frame_length / sample_rate) # Simulate real time
+        list_samples_id = np.arange(i * frame_length, (i + 1) * frame_length)
+        time.sleep(frame_length / sample_rate)
         frame = audio_data_int16[list_samples_id]
         buffer.put(frame)
         notice_send_samples(list_samples_id)
     print('Stop emitting')
+    global streaming_done
+    streaming_done = True
 
 def process_data():
     i = 0
     start_event.wait()
-    print('Start processing')
-    while i != number_of_frames:
-        frame = buffer.get()
-        
-        ### TODO: YOUR CODE
-        # MODIFY
-        list_samples_id = np.arange(i*frame_length, (i+1)*frame_length)
-        labels = [1 for _ in range(len(list_samples_id))]
-        ###
 
-        label_samples(list_samples_id, labels)
-        i += 1
+    print('Start processing')
+    frames_buffer = []
+    while i != number_of_frames or not streaming_done:
+            frame = buffer.get(timeout=1) 
+            rec.AcceptWaveform(b''.join(frame))
+            result = rec.Result()
+            text = json.loads(result)["text"]
+            print(text)
+
+            if "GALACTIC" in text:
+                list_samples_id = np.arange((i - len(frames_buffer)) * frame_length, (i + 1) * frame_length)
+                labels = [0] * len(list_samples_id)
+                label_samples(list_samples_id, labels)
+                frames_buffer = []
+            else:
+                frames_buffer.append(frame)
+
+            i += 1
+
+        
+
+            if terminate_processing:
+                break
+
     print('Stop processing')
-    # Save the list to a file
     with open('results.pkl', 'wb') as file:
         pickle.dump(results, file)
 
 
-if __name__ == "__main__": 
+if __name__ == "__main__":
     time_measurement = []
+    model = Model(model_name="vosk-model-en-us-0.42-gigaspeech")
+    rec = KaldiRecognizer(model, sample_rate)
+    rec.SetWords(True)
 
     thread_process = threading.Thread(target=process_data)
     thread_emit = threading.Thread(target=emit_data)
-    
+
     thread_process.start()
     thread_emit.start()
+    thread_emit.join()
+
+    terminate_processing = True
+
+    thread_process.join()
