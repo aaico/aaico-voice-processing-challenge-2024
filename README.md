@@ -35,12 +35,35 @@ Team name: V-Stream Analysts
 Members:
 
 - Mohammed Sadiq Bagalkot - sadiqshabbir4@gmail.com
-- Alora Tabuco - alorartabuco@gmail.com
 - Bhavika Kaliya - bhavikakaliya@gmail.com
+- Alora Tabuco - alorartabuco@gmail.com
 
 #### Solution description
 
-Provide clear and concise documentation in your code and update the README.md file with any additional information regarding your solution.
+##### Submission Details
+
+We have decided to submit two solutions: a Mel-Spec approach and a Speech-to-Text approach. The main requirements of the Hackathon were real-time processing and accurate labelling. 
+
+Considering this, these are our two solutions.
+
+###### Best Overall Performance: Mel-Spectrograms with CNN
+
+Score in .ipynb file: **0.84**
+
+Our solution leverages Mel-Spectrograms[1] [2]  with Convolutional Neural Networks (CNN) for real-time processing and accurate labeling of audio data. Mel-Spectrograms, known for their effectiveness in representing audio as images, are utilized as input to the CNN model.
+
+**Training**
+We initiated the process by converting the provided audio files into Mel-Spectrograms. To ensure robustness, we augmented the dataset, particularly focusing on increasing samples for the 'command' (Class 0) category. Data was then split into training and testing sets, maintaining a 70/30 ratio. Notably, we refrained from shuffling the data to retain its sequential nature.
+
+The model architecture comprises four convolutional blocks, incorporating an average pooling layer and dropout layer for regularization. We employed the BCEWithLogits loss function [3], Adam optimizer [4], and One Cycle Learning Rate scheduler [5] for training stability. The model underwent training for 30 epochs to achieve optimal performance.
+
+
+**Solution in .py file**
+Our solution is encapsulated within the aaico_voice_processing_challenge.py file in the Mel-Spec folder. In the real-time scenario, each emitted frame is processed by converting it into a Mel-Spectrogram. This spectrogram serves as input to the pre-trained CNN model. Subsequently, the model predicts the class label, either 'command' (Class 0) or 'communication' (Class 1), facilitating efficient processing and labeling of incoming audio data streams.
+
+This approach combines the advantages of Mel-Spectrograms and CNNs to meet the requirements of real-time processing and accurate labeling, thereby emerging as the best-performing solution for the challenge.
+
+
 
 ### Submission Deadline
 
@@ -53,3 +76,11 @@ If you have any questions or need clarification on the challenge, feel free to r
 Best of luck!
 
 AAICO team.
+
+### References
+
+[1]: https://en.wikipedia.org/wiki/Spectrogram 'Spectrograms'
+[2]: https://librosa.org/doc/main/generated/librosa.feature.melspectrogram.html 'Mel-Spectrograms'
+[3]: https://pytorch.org/docs/stable/generated/torch.nn.BCEWithLogitsLoss.html 'BCE With Logits Loss'
+[4]: https://pytorch.org/docs/stable/generated/torch.optim.Adam.html 'Adam Optimizer'
+[5]: https://pytorch.org/docs/stable/generated/torch.optim.lr_scheduler.OneCycleLR.html 'One Cycle LR'
