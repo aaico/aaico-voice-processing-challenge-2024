@@ -38,7 +38,7 @@ Members:
 
 - Basim Jaaskelainen - basimjaaskelainen2000@gmail.com
 - Mariah Khalifa - mariahkhalifa05@gmail.com
-- Muhammad Ansari - [Member email]
+- Muhammad Ansari - mdansari2127@gmail.com
 
 #### Solution description
 
