@@ -88,6 +88,13 @@ Our alternative solution is encapsulated within the `aaico_voice_processing_chal
 
 The solution achieves a score of **0.88** when evaluated solely on accuracy metrics (unintentional broadcast and lost communication). However, when considering the time restriction (<50ms per sample), the performance decreases significantly to a score of 0.014. As such, while this approach provides accurate labeling, it does not fulfill the real-time processing requirement and is thus presented as an alternate approach rather than our main solution for the Hackathon problem.
 
+To install required packages for Speech-to-Text approach:
+:
+```
+pip install -r Speech-to-text/requirements.txt
+```
+Run ```aaico_voice_processing_challenge.py``` in the Speech-to-text directory to get results.pkl.
+
 ### Submission Deadline
 
 Make sure to submit your solution before February 11th 2024, 11:59pm UAE time.
