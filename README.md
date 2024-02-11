@@ -11,6 +11,8 @@ Members:
 - Nripesh Niketan - nripesh14@gmail.com
 - Arunima Santhosh Kumar - arunimasanthosh2303@gmail.com
 
+Both of us are Undergraduate students at Heriot-Watt University, Dubai Campus, pursuing a Bachelor's degree in Computer Science.
+
 ### Solution description
 
 For the Applied AI Company (AAICO) February 2024 Hackathon, our team developed a Python-based solution to address the challenge of distinguishing between control commands and broadcast communications in a one-minute audio stream from a firefighting suit. Our approach leverages a custom AudioResNetClassifier model, optimized for speed and accuracy in real-time audio processing and wake word recognition.
