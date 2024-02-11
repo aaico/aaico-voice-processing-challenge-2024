@@ -34,9 +34,9 @@ Team name: Ctrl X
 
 Members:
 
-- Mohammed Riaz - mohd.riaz.2002@gmail.com
-- Mohammed Ejazzur Rahman - mohammedejazzur@gmail.com
-- Hadiyya Mattummathodi - hadiyyasakkir@gmail.com
+- Mohammed Riaz - mohd.riaz.2002@gmail.com - BSc Computer Science Student at the University of Wollongong in Dubai
+- Mohammed Ejazzur Rahman - mohammedejazzur@gmail.com - BSc Computer Science Student at the University of Wollongong in Dubai
+- Hadiyya Mattummathodi - hadiyyasakkir@gmail.com - BSc Computer Science Student at the University of Wollongong in Dubai
 
 #### Solution description
 
