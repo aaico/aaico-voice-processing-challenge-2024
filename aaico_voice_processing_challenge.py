@@ -74,7 +74,8 @@ def process_data():
 
     ## collect all the frames before processing - the LLM inferences correctly only with all the frames together
     ## inferencing with one frame at a time will not yeirld results
-    ### also rescale the frame data to original floating point format as the LLM can process only such data
+    ## also rescale the frame data to original floating point format as the LLM can process only such data
+
     frames = []
     while i != number_of_frames:
         frame = buffer.get()
