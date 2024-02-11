@@ -131,8 +131,6 @@ If we were to comment out the threshold penalty, we get a score of 100 as shown 
 
 This highlights our succesful attemt at identifying the command, declaring offsets and labeling the emitted audio, framy by frame. The only reason we get hit with the penalty is due to us leveraging an external pre-trained model. With enough time and resources, we believe that we can develop our own in-house model to optimize our solution even further.
 
-**Note:** The API key listed in the file is for the sake of this hackathon only and there are no issues of privacy whatsoever. We have allowance of upto 3 different users using this API key, only 1 of us is using it in our local machine. Our code runs offline as long as the API key is mentioned, we highlighted in our request that the model we trained will be used to take part in a hackathon and there may be monetary benefits out of this. We were given approval.
-
 #### Alternate Approaches
 
 We tried several approaches and picked the best one in terms of score (which is implemented in our current code base). Some of our discarded approaches included:
@@ -146,6 +144,18 @@ However, both performed poorly on the scoring, yielding scores of only 45 and 19
 Another approach we had but did not implement is described below:
 
 We use a wake word/keyword spotting model to identify the keyword "Galactic". Then we use a Voice Activity Detection model/pipeline to identify when the command has been said completely (non-human speech such as silence or white noise would indicate the end of the command). We would then mark the range of that as 0s (comamnds). In real-world scenarios, it may be important to distinguish between different commands as "Galactic Battery" and "Galactic Oxygen" may trigger different workflows. So it would then be important to parse the command using a speech to text/speech recognition model. However, this is a very heavy approach as it would rely on 3 different processes and models which would not be ideal for real-word scenarios. Hence, we did not attempt this.
+
+#### Additional Notes
+
+- The API key listed in the file is for the sake of this hackathon only and there are no issues of privacy whatsoever. We have allowance of upto 3 different users using this API key, only 1 of us is using it in our local machine. Our code runs offline as long as the API key is mentioned, we highlighted in our request that the model we trained will be used to take part in a hackathon and there may be monetary benefits out of this. We were given approval.
+
+- On the receiver side, we label multiple frames at the same time (after we receive them) but we label each frame that was sent (using the dedicated function that feed the results array). However, due to this, the first constraint fails. We asked and verify the same in the discord chat, please find the below attached chat snippet.
+
+![image](https://github.com/Suhail270/aaico-voice-processing-challenge-2024/assets/57321434/146715c3-4123-40b3-a5d8-79aad8874f12)
+
+- Because we use an external pre-trained model, the time takes a longer time. Again, it was confirmed in the Discord channel that this would be taken into account and there would be some leniency.
+
+Thank you for your understanding. 
 
 For any queries you may have, please do contact suhailz13ahmed@outlook.com or +971547475288.
 
