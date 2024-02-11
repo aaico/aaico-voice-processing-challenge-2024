@@ -1,6 +1,7 @@
 # AAICO Hackathon Submission
 
 Team Name: Noufal
+
 Member: Noufal - kvsnoufal@gmail.com
 
 ## Approach:
@@ -16,8 +17,9 @@ Member: Noufal - kvsnoufal@gmail.com
 - To replicate, upload all files in the `Colab Test` folder to a Google Colab notebook.
 - Replace `test_aaico_challenge.wav` with test file 
 - Use T4 GPU runtime.
-- Recommended to run on Colab or any other machine with GPU
-
+- Recommended to run on Colab (requires fewer dependencies -refer link) or any other machine with GPU
+![Colab](supportFiles/colabshot.png)
+![Runtime](supportFiles/colabruntime.png)
 
 
 
