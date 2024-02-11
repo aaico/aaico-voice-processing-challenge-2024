@@ -9,7 +9,7 @@ import pvporcupine
 
 porcupine = pvporcupine.create(
   access_key='JBqYDTmb4YhnRaV7wF30bFNHCCAiUaeNvLXp2W2i5f6eWPY29h3+jg==',
-  keyword_paths=['models/GALACTIC-BATTERY_en_mac_v3_0_0.ppn', 'models/LACTIC-OXYGEN_en_mac_v3_0_0.ppn', 'models/LACTIC-TEMPERATURE_en_mac_v3_0_0.ppn'],
+  keyword_paths=['models/GALACTIC-BATTERY_en_linux_v3_0_0.ppn', 'models/LACTIC-OXYGEN_en_linux_v3_0_0.ppn', 'models/LACTIC-TEMPERATURE_en_linux_v3_0_0.ppn'],
 )
 
 
