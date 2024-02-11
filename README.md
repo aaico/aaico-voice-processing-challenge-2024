@@ -30,17 +30,30 @@ To have your solution considered, it must be reproducible by the AAICO team.
 
 #### Team
 
-Team name: [Team name]
+Team name: [LoneWolf]
 
 Members:
 
-- [Member Name] - [Member email]
-- [Member Name] - [Member email]
-- [Member Name] - [Member email]
+- [Srinivas Valmeti] - [vsrinivastp@gmail.com]
 
 #### Solution description
 
-Provide clear and concise documentation in your code and update the README.md file with any additional information regarding your solution.
+The solution makes use of one of the popular open source LLMs, Wav2Vec2ForCTC (refer https://huggingface.co/docs/transformers/model_doc/wav2vec2 for documentation).
+
+The solution involves the following approach/ steps:
+1. Since LLMs like Wav2Vec2ForCTC require a sequence of words (more than just one or two words) to capture the context and make inferences, it is important to collect as many frames as possible,befiore inference.
+2. Since the given the audio is just about a minute, I decided to capture the all the frames, before carrying out inference and further process
+3. Once all the frames are captured, the LLM makes the inferences and captures, the worsd in the audio and their time offsets.
+4. The code looks for the words 'GALACTIC' or 'GALECTIC' and capture the start time offset of the word and end time offset of the word (or its next word, if exists), for each instance of the word command occurance (Galactic followed by some other word) as they are required to be blocked in broadcast communication.
+5. Based on the captured time_offsets, the labels are encoded and published at a time to results object
+
+The upsides of the solution:
+1. It is extremely (almost 100%) accurate in correctly infering the spoken words, identifying the command words and their  corresponding time stamps
+2. It is fast in processing long sentences.
+
+The downside of the solution:
+ 1. The overrun time between individual frame emitted and encoding corresponding labels in results object exceeds teh required threshold by a big factor (for all samples), making the score zero.
+2. Such a overrun may not be of real practical use.
 
 ### Submission Deadline
 
