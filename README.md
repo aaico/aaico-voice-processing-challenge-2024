@@ -30,17 +30,17 @@ To have your solution considered, it must be reproducible by the AAICO team.
 
 #### Team
 
-Team name: [Team name]
+Team name: BzAnalytics
 
 Members:
 
-- [Member Name] - [Member email]
-- [Member Name] - [Member email]
-- [Member Name] - [Member email]
+- Shafeek Mohammed - shafeek.muhammed@bzanalytics.ai
 
 #### Solution description
 
-Provide clear and concise documentation in your code and update the README.md file with any additional information regarding your solution.
+With the support of Speech recongnition and OpenAI-Whisper read the frames data and separate it into phrases clips and identify the control commands from its translation.
+
+- Install its required dependencies `pip install -r requirements.txt`
 
 ### Submission Deadline
 
