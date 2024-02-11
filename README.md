@@ -40,8 +40,6 @@ Members:
 
 #### Solution description
 
-##### Submission Details
-
 We have decided to submit two solutions: a Mel-Spec approach and a Speech-to-Text approach. The main requirements of the Hackathon were real-time processing and accurate labelling. 
 
 Considering this, these are our two solutions.
