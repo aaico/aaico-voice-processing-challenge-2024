@@ -14,7 +14,7 @@ Once the code is executed, a '*results.pkl*' file will be saved, which is an arr
 
 - The time at which the sample was emitted.
 - The label you assigned to the sample.
-- The time at which the sample was labelled.
+- The time at which the sample was labeled.
 
 More details on the challenge are provided here: https://docs.google.com/document/d/1Nacv8gT2kfG2wGWXIdKaisStBy2xfGPJIGy27AqqEo4.
 
@@ -50,6 +50,8 @@ The process_data() function consists of many functionalities:
 3- playback timing: Counts the processing duration since the processing start, then will measure the overrun time
 4-saving: it will save the results in a pickle file.
 5- Reporting: it will print  completion of processing for each frame.
+
+
 Please note: we did work in different ways and implemented many times to get different results, but we ended with the above results that we made our trials as a comment. 
 
 
