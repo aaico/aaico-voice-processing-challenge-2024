@@ -11,9 +11,10 @@ Member: Noufal - kvsnoufal@gmail.com
 3. Use [Google Speech Embedding model](https://www.kaggle.com/models/google/speech-embedding) to create embeddings.
 4. Use ANN model for classification.
 
-### Running the Sciprt:
+### Running the Script:
 - Running script in Colab: [Colab Link](https://colab.research.google.com/drive/1nL5BOHXoV8quGAuNwM5fub9e3FP6FSvv?usp=sharing)
-- To replicate, upload all files in the "Colab Test" folder to a Google Colab notebook. 
+- To replicate, upload all files in the `Colab Test` folder to a Google Colab notebook.
+- Replace `test_aaico_challenge.wav` with test file 
 - Use T4 GPU runtime.
 - Recommended to run on Colab or any other machine with GPU
 
