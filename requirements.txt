@@ -1,3 +1,5 @@
 librosa
 numpy
 vosk
+os
+json
