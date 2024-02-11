@@ -81,12 +81,12 @@ In addition to our primary Mel-Spectrogram solution, we present an alternative a
 **Implementation**
 
 
-Our alternative solution is encapsulated within the `aaico_voice_processing_challenge.py` file in the Speech-to-text folder. In the real-time scenario, frames are processed in batches of 50. Every batch of 50 frames undergoes transcription. If the transcription contains the word "GALACTIC," the frames in the batch are retroactively labeled as Class 0; otherwise, they are labeled as Class 1.
+Our alternative solution is encapsulated within the `aaico_voice_processing_challenge.py` file in the Speech-to-text folder. In the real-time scenario, frames are processed in batches of 50. Every batch of 50 frames undergoes transcription. If the transcription contains the word "GALACTIC", "OXYGEN", "TEMPERATURE" OR "BATTERY", the frames in the batch are retroactively labeled as Class 0; otherwise, they are labeled as Class 1.
 
 **Performance**
 
 
-The solution achieves an accuracy score of 0.81 when evaluated solely on accuracy metrics. However, when considering the time restriction (<50ms per sample), the performance decreases significantly to a score of 0.16. As such, while this approach provides accurate labeling, it does not fulfill the real-time processing requirement and is thus presented as an alternate approach rather than our main solution for the Hackathon problem.
+The solution achieves a score of **0.88** when evaluated solely on accuracy metrics (unintentional broadcast and lost communication). However, when considering the time restriction (<50ms per sample), the performance decreases significantly to a score of 0.014. As such, while this approach provides accurate labeling, it does not fulfill the real-time processing requirement and is thus presented as an alternate approach rather than our main solution for the Hackathon problem.
 
 ### Submission Deadline
 
