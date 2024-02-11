@@ -143,7 +143,7 @@ def getpreds(sample):
 print("warming up gpu ....")
 
 time_taken = 1000
-for _ in tqdm(range(512),total=512,unit="iter"):
+for _ in tqdm(range(1024),total=1024,unit="iter"):
     start_time = time.time()
     __ = getpreds(np.array(MEMORY))
     time_taken = (time.time()-start_time)*1000
