@@ -1,2 +1,3 @@
+torch
 librosa
 numpy
