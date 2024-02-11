@@ -40,7 +40,13 @@ Members:
 
 #### Solution description
 
-Provide clear and concise documentation in your code and update the README.md file with any additional information regarding your solution.
+The provided solution describes a deep learning approach tailored to process audio signals within a high-stakes firefighting environment, where voice commands control a modern firefighting suit. The core of this solution is a custom Convolutional Neural Network (CustomCNN), designed to differentiate between command signals and general communication. This network features a carefully structured architecture that starts with a convolution layer to capture spatial hierarchies in the input spectrogram data, followed by additional convolution layers that expand the channel depth for more complex feature extraction.
+
+Incorporation of depthwise separable convolutions, aiming to enhance model efficiency by reducing computational costs while maintaining performance. The model concludes with a global average pooling layer that reduces spatial dimensions to a singular vector, feeding into a fully connected layer for binary classification. Each layer is accompanied by batch normalization and ReLU activation functions to stabilize learning and introduce non-linearity, respectively.
+
+Data preprocessing converts audio frames into spectrogram representations, standardizing them for consistent model input. Coupled with batch processing aims to process audio frames in small batches, allowing for faster throughput and reduced processing times per sample. This method ensures that the model meets real-time processing constraints, crucial for operational viability in emergency situations.
+
+Achieved a score of 0.05497689026818906 when evaluated against the provided Collab notebook.
 
 ### Submission Deadline
 
