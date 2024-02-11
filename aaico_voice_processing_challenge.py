@@ -81,6 +81,9 @@ def process_current_word(word, frame_index):
             results[1][i] = 0
 
 def process_data():
+    """
+    Process the audio data in real-time and label the corresponding frames with detected words.
+    """
     i = 0
     current_word = ""
     current_word_frames = 0
@@ -89,19 +92,21 @@ def process_data():
     while i != number_of_frames:
         frame = buffer.get()
 
-        # clip the audio data to the valid range of 0 to 255
-        frame = np.clip(frame, 0, 255).astype(np.uint8)
+        # Convert the audio data to characters
+        try:
+            current_word += frame.tobytes().decode('utf-8')
+        except UnicodeDecodeError:
+            # Handle decoding errors by replacing invalid bytes with a placeholder character
+            current_word += frame.tobytes().decode('utf-8', errors='replace')
 
-        # convert the audio data to characters
-        current_word += "".join([chr(x) for x in frame])
         current_word_frames += frame_length
 
-        # check if the word is complete
+        # Check if the word is complete
         if current_word_frames >= frame_length:
-            # process the current word
-            process_current_word(current_word, i - current_word_frames)
+            # Process the current word
+            process_current_word(current_word, i * frame_length)
 
-            # reset variables for the next word
+            # Reset variables for the next word
             current_word = ""
             current_word_frames = 0
 
@@ -109,13 +114,14 @@ def process_data():
 
     print('Stop processing')
 
-    # process any remaining partial word
+    # Process any remaining partial word
     if current_word_frames > 0:
-        process_current_word(current_word, i - current_word_frames)
+        process_current_word(current_word, i * frame_length)
 
     # Save the results to a file
     with open('results.pkl', 'wb') as file:
         pickle.dump(results, file)
+
 
 
 
