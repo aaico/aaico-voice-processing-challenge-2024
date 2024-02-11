@@ -46,7 +46,9 @@ Similarly, the probelm statement describes three commands; all starting with the
 
 The primary function, process_data(), processes a stream of audio frames, detects keywords using Porcupine, and labels the samples accordingly (0 or 1). We also wrote a helper function, process_label() which handles the dynamic labeling of samples based on keyword detection.
 
-An overview of our two core funcitons can be found below:
+Our model not only labels commands correctly, but it is also able to distinguish between different commands. It is able to parse and identify "Galactic Oxygen", "Galactic Temperature" and "Galactic Battery" as different commands rather than treating them as the same, makign it suitable for real-world scenarios.
+
+An overview of our two core functions can be found below:
 
 #### process_label(start_time, end_time, flag, cur_frame, keyword=False) Function:
 
@@ -94,7 +96,28 @@ Result:
 
 - Saves the labeled samples and timestamps to a pickle file (results.pkl).
 
-#### Our Results
+#### Setup
+
+This code was developed on Python 3.11.6
+
+- Install additional dependencies
+
+```bash
+   pip install pvporcupine
+```
+
+- Run Script
+
+```bash
+   python aaico_voice_processing_challenge.py
+```
+
+#### Results
+
+| Constraint  | Score | 
+| -------------- | --------------- | 
+| Original Evaluation (With threshold penalty)      | 94.34               |
+| Without slow threshold penalty    | x100              |
 
 Due to the robust and dynamic way we appriached this problem wherein we aimed to minimize resources and maximize accuracy, we obtained an impresseive score of 94 (with the slow threshold penalty) as shown below.
 
@@ -108,7 +131,21 @@ If we were to comment out the threshold penalty, we get a score of 100 as shown 
 
 This highlights our succesful attemt at identifying the command, declaring offsets and labeling the emitted audio, framy by frame. The only reason we get hit with the penalty is due to us leveraging an external pre-trained model. With enough time and resources, we believe that we can develop our own in-house model to optimize our solution even further.
 
-#### Note: The API key listed in the file is for the sake of this hackathon only and there are no issues of privacy whatsoever. We have allowance of upto 3 different users using this API key, only 1 of us is using it in our local machine. Our code runs offline as long as the API key is mentioned, we highlighted in our request that the model we trained will be used to take part in a hackathon and there may be monetary benefits out of this. We were given approval.
+**Note:** The API key listed in the file is for the sake of this hackathon only and there are no issues of privacy whatsoever. We have allowance of upto 3 different users using this API key, only 1 of us is using it in our local machine. Our code runs offline as long as the API key is mentioned, we highlighted in our request that the model we trained will be used to take part in a hackathon and there may be monetary benefits out of this. We were given approval.
+
+#### Alternate Approaches
+
+We tried several approaches and picked the best one in terms of score (which is implemented in our current code base). Some of our discarded approaches included:
+
+- Native CNN based on audio images - We curated a dataset of audio segments comprising the commands which we converted to images (represented as a matrix). We then compared each image segment of audio to that of our training dataset's and predict accordingly. This gave us an accuracy of 95%.
+- 
+- Native Random Forest Classifier - With the same dataset along with augemntations of it (original audio samples + noisy augmentations of them), we acheived an accuracy of 93%.
+
+However, both performed poorly on the scoring, yielding scores of only 45 and 19 respectively.
+
+Another approach we had but did not implement is described below:
+
+We use a wake word/keyword spotting model to identify the keyword "Galactic". Then we use a Voice Activity Detection model/pipeline to identify when the command has been said completely (non-human speech such as silence or white noise would indicate the end of the command). We would then mark the range of that as 0s (comamnds). In real-world scenarios, it may be important to distinguish between different commands as "Galactic Battery" and "Galactic Oxygen" may trigger different workflows. So it would then be important to parse the command using a speech to text/speech recognition model. However, this is a very heavy approach as it would rely on 3 different processes and models which would not be ideal for real-word scenarios. Hence, we did not attempt this.
 
 For any queries you may have, please do contact suhailz13ahmed@outlook.com or +971547475288.
 
