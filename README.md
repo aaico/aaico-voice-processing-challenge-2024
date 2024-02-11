@@ -55,7 +55,7 @@ To install required packages:
 ```
 pip install -r Mel-Spectogram/requirements.txt
 ```
-Run ```aaico_voice_processing_challenge.py``` in the Mel-Spectogram directory to get results.pkl
+Run ```aaico_voice_processing_challenge.py``` in the Mel-Spectogram directory to get results.pkl /
 Alternatively run ```run_training.py``` to train the model.
 
 Our solution leverages Mel-Spectrograms[1] [2]  with Convolutional Neural Networks (CNN) for real-time processing and accurate labeling of audio data. Mel-Spectrograms, known for their effectiveness in representing audio as images, are utilized as input to the CNN model.
