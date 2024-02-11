@@ -58,25 +58,65 @@ def emit_data():
         notice_send_samples(list_samples_id)
     print('Stop emitting')
 
+
+# initialize variables
+current_word = ""
+current_word_frames = 0
+galactic_word = False
+last_frame_label = 1
+
+def process_current_word(word, frame_index):
+    """
+    Process the completed word and label the corresponding frames in the `results` array.
+
+    Parameters:
+    word (str): The completed word to be processed.
+    frame_index (int): The index of the first frame in the word.
+    """
+    if word == "galactic":
+        for i in range(frame_index, frame_index + frame_length):
+            results[1][i] = 1
+    else:
+        for i in range(frame_index, frame_index + frame_length):
+            results[1][i] = 0
+
 def process_data():
     i = 0
+    current_word = ""
+    current_word_frames = 0
     start_event.wait()
     print('Start processing')
     while i != number_of_frames:
         frame = buffer.get()
-        
-        ### TODO: YOUR CODE
-        # MODIFY
-        list_samples_id = np.arange(i*frame_length, (i+1)*frame_length)
-        labels = [1 for _ in range(len(list_samples_id))]
-        ###
 
-        label_samples(list_samples_id, labels)
+        # clip the audio data to the valid range of 0 to 255
+        frame = np.clip(frame, 0, 255).astype(np.uint8)
+
+        # convert the audio data to characters
+        current_word += "".join([chr(x) for x in frame])
+        current_word_frames += frame_length
+
+        # check if the word is complete
+        if current_word_frames >= frame_length:
+            # process the current word
+            process_current_word(current_word, i - current_word_frames)
+
+            # reset variables for the next word
+            current_word = ""
+            current_word_frames = 0
+
         i += 1
+
     print('Stop processing')
-    # Save the list to a file
+
+    # process any remaining partial word
+    if current_word_frames > 0:
+        process_current_word(current_word, i - current_word_frames)
+
+    # Save the results to a file
     with open('results.pkl', 'wb') as file:
         pickle.dump(results, file)
+
 
 
 if __name__ == "__main__": 
