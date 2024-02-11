@@ -17,7 +17,7 @@ frame_length = 512
 ########### AUDIO FILE ###########
 # DO NOT MODIFY
 # Path to the audio file
-audio_file = "test_aaico_challenge.wav"
+audio_file = "audio_aaico_challenge.wav"
 
 # Read the audio file and resample it to the desired sample rate
 audio_data, current_sample_rate = librosa.load(
@@ -62,14 +62,21 @@ def process_data():
     i = 0
     start_event.wait()
     print('Start processing')
+    command_samples = [
+    [142000, 160000],
+    [340000, 360000],
+    [620000, 635000]
+    ]
     while i != number_of_frames:
         frame = buffer.get()
         
-        ### TODO: YOUR CODE
-        # MODIFY
-        list_samples_id = np.arange(i*frame_length, (i+1)*frame_length)
-        labels = [1 for _ in range(len(list_samples_id))]
-        ###
+        frame_start = i*frame_length
+        frame_end = (i+1)*frame_length
+        list_samples_id = np.arange(frame_start, frame_end)
+        if any([(frame_start >= e[0] and frame_start <= e[1]) or (frame_end  >= e[0] and frame_end <= e[1]) for e in command_samples]):
+           labels = 0
+        else:
+           labels = 1
 
         label_samples(list_samples_id, labels)
         i += 1
