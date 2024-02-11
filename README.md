@@ -26,7 +26,7 @@ To submit your solution, fork the repository, create a branch with the name of y
 
 To have your solution considered, it must be reproducible by the AAICO team.
 
-### Solution description (to complete)
+### Solution description 
 
 #### Team
 
@@ -38,13 +38,13 @@ Members:
 - Bhavika Kaliya - bhavikakaliya@gmail.com
 - Alora Tabuco - alorartabuco@gmail.com
 
-#### Solution description
+#### Our Solution(s)
 
 We have decided to submit two solutions: a Mel-Spec approach and a Speech-to-Text approach. The main requirements of the Hackathon were real-time processing and accurate labelling. 
 
 Considering this, these are our two solutions.
 
-##### Best Overall Performance: Mel-Spectrograms with CNN
+#### Best Overall Performance: Mel-Spectrograms with CNN
 
 Score from results.pkl (overall): **0.86**
 
@@ -73,7 +73,7 @@ Our solution is encapsulated within the aaico_voice_processing_challenge.py file
 
 This approach combines the advantages of Mel-Spectrograms and CNNs to meet the requirements of real-time processing and accurate labeling, thereby emerging as the best-performing solution for the challenge.
 
-##### Alternative Solution: Speech-to-Text
+#### Alternative Solution: Speech-to-Text
 
 
 In addition to our primary Mel-Spectrogram solution, we present an alternative approach utilizing Facebook's pretrained model for Automatic Speech Recognition, specifically the wav2vec2-base-960h model [6]. While this model achieves accurate labeling, it falls short of meeting the real-time processing requirement (<50ms per sample).
